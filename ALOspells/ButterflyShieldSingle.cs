@@ -40,8 +40,7 @@ namespace ALOspells
                 }
                 else
                 {
-                    Enabled = true;
-                    Time = Game.GameTime + MaxTime;
+                    EnableSpell();
                 }
             }
 
@@ -55,6 +54,12 @@ namespace ALOspells
             {
                 DisableSpell();
             }
+        }
+
+        private void EnableSpell()
+        {
+            Enabled = true;
+            Time = Game.GameTime + MaxTime;
         }
 
         private void ExecuteSpell()
