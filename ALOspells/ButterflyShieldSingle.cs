@@ -1,6 +1,5 @@
-﻿using GTA;
+using GTA;
 using GTA.Math;
-using GTA.Native;
 using System;
 using System.Drawing;
 
@@ -33,7 +32,7 @@ namespace ALOspells
         private void OnTick(object sender, EventArgs e)
         {
             // If the cheat has been entered
-            if (Function.Call<bool>(Hash._0x557E43C447E700A8, Game.GenerateHash("shieldsingle")))
+            if (Tools.HasCheatBeenEntered("shieldsingle"))
             {
                 if (Enabled)
                 {

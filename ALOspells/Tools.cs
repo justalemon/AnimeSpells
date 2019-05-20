@@ -1,5 +1,6 @@
 ﻿using GTA;
 using GTA.Math;
+using GTA.Native;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -65,6 +66,11 @@ namespace ALOspells
                     return new Vector3(2, 2, 2);
                 }
             }
+        }
+
+        public static bool HasCheatBeenEntered(string cheat)
+        {
+            return Function.Call<bool>(Hash._0x557E43C447E700A8, Game.GenerateHash(cheat));
         }
     }
 }
