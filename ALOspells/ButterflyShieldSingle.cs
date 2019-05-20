@@ -1,4 +1,4 @@
-using GTA;
+﻿using GTA;
 using GTA.Math;
 using System;
 using System.Drawing;
@@ -36,7 +36,7 @@ namespace ALOspells
             {
                 if (Enabled)
                 {
-                    DisableShield();
+                    DisableSpell();
                 }
                 else
                 {
@@ -48,16 +48,16 @@ namespace ALOspells
             // If the spell is enabled and we are under the duration of the spell
             if (Enabled && Time >= Game.GameTime)
             {
-                UseShield();
+                ExecuteSpell();
             }
             // If the script is enabled and the time is not zero
             else if (Enabled && Time != 0)
             {
-                DisableShield();
+                DisableSpell();
             }
         }
 
-        private void UseShield()
+        private void ExecuteSpell()
         {
             // Draw a marker around the player or vehicle
             World.DrawMarker((MarkerType)27, Tools.Position, Vector3.Zero, Vector3.Zero, Tools.ShieldDiameter, Color.CadetBlue, false, false, 0, true, "", "", false);
@@ -87,7 +87,7 @@ namespace ALOspells
             }
         }
 
-        private void DisableShield()
+        private void DisableSpell()
         {
             // Disable invencibility for the player and the vehicle (if is there)
             if (Game.Player.Character.IsInvincible)
