@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="ButterflyShieldSingle.cs" />
     <Compile Include="ColdResistance.cs" />
+    <Compile Include="Concealment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tools.cs" />
   </ItemGroup>
