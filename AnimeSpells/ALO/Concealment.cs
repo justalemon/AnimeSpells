@@ -3,7 +3,7 @@ using GTA.Native;
 using System;
 using System.Linq;
 
-namespace ALOspells
+namespace AnimeSpells.ALO
 {
     /// <summary>
     /// Concealment

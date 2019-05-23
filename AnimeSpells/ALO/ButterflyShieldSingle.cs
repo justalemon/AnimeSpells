@@ -3,7 +3,7 @@ using GTA.Math;
 using System;
 using System.Drawing;
 
-namespace ALOspells
+namespace AnimeSpells.ALO
 {
     /// <summary>
     /// Butterfly Shield: Single Target (the player)

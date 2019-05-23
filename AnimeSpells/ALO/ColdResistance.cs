@@ -1,6 +1,6 @@
 ﻿using GTA;
 
-namespace ALOspells
+namespace AnimeSpells.ALO
 {
     /// <summary>
     /// Cold Resistance

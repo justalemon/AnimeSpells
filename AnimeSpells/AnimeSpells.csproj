@@ -7,8 +7,8 @@
     <ProjectGuid>{5DC2F7EC-E5BA-444B-AD26-B97BCA4C9B79}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ALOspells</RootNamespace>
-    <AssemblyName>ALOspells</AssemblyName>
+    <RootNamespace>AnimeSpells</RootNamespace>
+    <AssemblyName>AnimeSpells</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -46,7 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ButterflyShieldSingle.cs" />
+    <Compile Include="ALO\ButterflyShieldSingle.cs" />
     <Compile Include="ColdResistance.cs" />
     <Compile Include="Concealment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
