@@ -10,8 +10,7 @@ namespace AnimeSpells.ALO
     /// </summary>
     public class Concealment : BaseScript
     {
-        public override bool Enabled { get; set; } = false;
-        public override string Cheat { get { return "concealment"; } } 
+        public override string Cheat => "concealment";
 
         public Concealment()
         {

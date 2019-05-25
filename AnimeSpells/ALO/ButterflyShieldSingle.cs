@@ -11,8 +11,7 @@ namespace AnimeSpells.ALO
     /// </summary>
     public class ButterflyShieldSingle : BaseScript
     {
-        public override bool Enabled { get; set; } = false;
-        public override string Cheat { get { return "shieldsingle"; } }
+        public override string Cheat => "shieldsingle";
         private int Time { get; set; } = 0;
         private const int MaxTime = 5000;
 
