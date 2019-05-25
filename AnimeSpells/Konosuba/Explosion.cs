@@ -41,11 +41,16 @@ namespace AnimeSpells.Konosuba
         /// If the wants to use the Explosions until they are manually deactivated.
         /// </summary>
         public bool Permanent = false;
+        /// <summary>
+        /// A blip for the current marker.
+        /// </summary>
+        public Blip MarkerBlip = null;
 
         public Explosion()
         {
-            // Add our tick event
+            // Add our tick event and abort events
             Tick += OnTick;
+            Aborted += OnAborted;
         }
 
         private void OnTick(object sender, EventArgs args)
@@ -105,18 +110,35 @@ namespace AnimeSpells.Konosuba
                 Position = World.GetCrosshairCoordinates().HitCoords;
                 // Create a green static marker
                 World.DrawMarker((MarkerType)27, Position, Vector3.Zero, Vector3.Zero, new Vector3(10, 10, 10), Color.LightGreen);
+                // If there is not a blip created
+                if (MarkerBlip == null)
+                {
+                    // Create a blip on the map
+                    MarkerBlip = World.CreateBlip(Position);
+                    // Set the color to green
+                    MarkerBlip.Color = BlipColor.Green;
+                    // Set the title to something more easy to find
+                    MarkerBlip.Name = "Detonation";
+                }
+                // Set the position of the blip
+                MarkerBlip.Position = Position;
             }
             // If the current status is targeted
             else if (Status == ExplosionStatus.Set)
             {
                 // Draw a red rotating marker
                 World.DrawMarker((MarkerType)27, Position, Vector3.Zero, Vector3.Zero, new Vector3(10, 10, 10), Color.OrangeRed, false, false, 0, true, "", "", false);
+                // Change the blip color to red
+                MarkerBlip.Color = BlipColor.Red;
             }
             // If the current status is firing
             else if (Status == ExplosionStatus.Firing)
             {
                 // Create a blimp type explosion with a radius of 1000
                 World.AddExplosion(Position, ExplosionType.Blimp, 1000, 0, true, false);
+                // Destroy the blip
+                MarkerBlip.Remove();
+                MarkerBlip = null;
                 // If the permanent explosions are enabled
                 if (Permanent)
                 {
@@ -135,6 +157,16 @@ namespace AnimeSpells.Konosuba
             {
                 // Ragdoll the player during 1ms
                 Function.Call(Hash.SET_PED_TO_RAGDOLL, Game.Player.Character, 1, 1, 1, true, true, false);
+            }
+        }
+
+        public void OnAborted(object sender, EventArgs args)
+        {
+            // If the blip is not null
+            if (MarkerBlip != null)
+            {
+                // Remove it from the map
+                MarkerBlip.Remove();
             }
         }
     }
