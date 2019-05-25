@@ -1,4 +1,4 @@
-using GTA;
+﻿using GTA;
 using GTA.Math;
 using GTA.Native;
 using System;
@@ -37,6 +37,10 @@ namespace AnimeSpells.Konosuba
         /// The position of the explosion.
         /// </summary>
         public Vector3 Position = Vector3.Zero;
+        /// <summary>
+        /// If the wants to use the Explosions until they are manually deactivated.
+        /// </summary>
+        public bool Permanent = false;
 
         public Explosion()
         {
@@ -52,12 +56,32 @@ namespace AnimeSpells.Konosuba
                 // Set the status to the next value
                 Status = NextStatus;
             }
-
-            // If the current status is not Disabled
-            if (Status != ExplosionStatus.Disabled)
+            // Ig the user wants to alterante the activation of the permanent mode
+            if (Tools.HasCheatBeenEntered("explosion permanent") || Tools.HasCheatBeenEntered("exp perm"))
             {
-                // If the player is using a weapon
-                if (Game.Player.Character.Weapons.Current.Hash != WeaponHash.Unarmed)
+                // Alternate the activation of the permanent explosions
+                Permanent = !Permanent;
+                // And notify the user just in case
+                UI.Notify("Permanent explosions " + (Permanent ? "Enabled" : "Disabled") + "!");
+                // If they have been enabled
+                if (Permanent)
+                {
+                    // Set the mode to targeting
+                    Status = ExplosionStatus.Targeting;
+                }
+                // Otherwise
+                else
+                {
+                    // Set the mode to disabled
+                    Status = ExplosionStatus.Disabled;
+                }
+            }
+
+            // If the current status is not Disabled or the permanent mode is enabled
+            if (Status != ExplosionStatus.Disabled || Permanent)
+            {
+                // If the player is using a weapon and is not on permanent mode
+                if (Game.Player.Character.Weapons.Current.Hash != WeaponHash.Unarmed && !Permanent)
                 {
                     // Select the fists
                     Game.Player.Character.Weapons.Select(WeaponHash.Unarmed);
@@ -93,8 +117,18 @@ namespace AnimeSpells.Konosuba
             {
                 // Create a blimp type explosion with a radius of 1000
                 World.AddExplosion(Position, ExplosionType.Blimp, 1000, 0, true, false);
-                // And inmediately set the status to ragdoll
-                Status = ExplosionStatus.Ragdoll;
+                // If the permanent explosions are enabled
+                if (Permanent)
+                {
+                    // Skip the ragdoll
+                    Status = ExplosionStatus.Targeting;
+                }
+                // Otherwise
+                else
+                {
+                    // Inmediately set the status to ragdoll
+                    Status = ExplosionStatus.Ragdoll;
+                }
             }
             // If the current status is ragdoll
             else if (Status == ExplosionStatus.Ragdoll)
