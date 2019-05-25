@@ -1,4 +1,4 @@
-﻿using GTA;
+using GTA;
 using GTA.Math;
 using GTA.Native;
 using System;
@@ -56,8 +56,16 @@ namespace AnimeSpells.Konosuba
             // If the current status is not Disabled
             if (Status != ExplosionStatus.Disabled)
             {
+                // If the player is using a weapon
+                if (Game.Player.Character.Weapons.Current.Hash != WeaponHash.Unarmed)
+                {
+                    // Select the fists
+                    Game.Player.Character.Weapons.Select(WeaponHash.Unarmed);
+                }
+
                 // Disable the fire/attack control
                 Game.DisableControlThisFrame(0, Control.Attack);
+                Game.DisableControlThisFrame(0, Control.Attack2);
                 // If the user just used the disabled control
                 if (Game.IsControlJustPressed(0, Control.Attack))
                 {
