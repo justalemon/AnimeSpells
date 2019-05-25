@@ -9,19 +9,11 @@ namespace AnimeSpells.ALO
     /// Butterfly Shield: Single Target (the player)
     /// https://swordartonline.fandom.com/wiki/Butterfly_Shield
     /// </summary>
-    public class ButterflyShieldSingle : Script
+    public class ButterflyShieldSingle : BaseScript
     {
-        /// <summary>
-        /// If the shield is enabled or not.
-        /// </summary>
-        private bool Enabled { get; set; } = false;
-        /// <summary>
-        /// The time to end the shield activation.
-        /// </summary>
+        public override bool Enabled { get; set; } = false;
+        public override string Cheat { get { return "shieldsingle"; } }
         private int Time { get; set; } = 0;
-        /// <summary>
-        /// The maximum duration of the shield.
-        /// </summary>
         private const int MaxTime = 5000;
 
         public ButterflyShieldSingle()
@@ -31,19 +23,6 @@ namespace AnimeSpells.ALO
 
         private void OnTick(object sender, EventArgs e)
         {
-            // If the cheat has been entered
-            if (Tools.HasCheatBeenEntered("shieldsingle"))
-            {
-                if (Enabled)
-                {
-                    DisableSpell();
-                }
-                else
-                {
-                    EnableSpell();
-                }
-            }
-
             // If the spell is enabled and we are under the duration of the spell
             if (Enabled && Time >= Game.GameTime)
             {
@@ -56,13 +35,13 @@ namespace AnimeSpells.ALO
             }
         }
 
-        private void EnableSpell()
+        public override void EnableSpell()
         {
             Enabled = true;
             Time = Game.GameTime + MaxTime;
         }
 
-        private void ExecuteSpell()
+        public override void ExecuteSpell()
         {
             // Draw a marker around the player or vehicle
             World.DrawMarker((MarkerType)27, Tools.Position, Vector3.Zero, Vector3.Zero, Tools.ShieldDiameter, Color.CadetBlue, false, false, 0, true, "", "", false);
@@ -92,7 +71,7 @@ namespace AnimeSpells.ALO
             }
         }
 
-        private void DisableSpell()
+        public override void DisableSpell()
         {
             // Disable invencibility for the player and the vehicle (if is there)
             if (Game.Player.Character.IsInvincible)

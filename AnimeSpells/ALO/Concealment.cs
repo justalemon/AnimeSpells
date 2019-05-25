@@ -1,7 +1,6 @@
 ﻿using GTA;
 using GTA.Native;
 using System;
-using System.Linq;
 
 namespace AnimeSpells.ALO
 {
@@ -9,9 +8,10 @@ namespace AnimeSpells.ALO
     /// Concealment
     /// https://swordartonline.fandom.com/wiki/Concealment
     /// </summary>
-    public class Concealment : Script
+    public class Concealment : BaseScript
     {
-        private bool Enabled { get; set; } = false;
+        public override bool Enabled { get; set; } = false;
+        public override string Cheat { get { return "concealment"; } } 
 
         public Concealment()
         {
@@ -26,24 +26,11 @@ namespace AnimeSpells.ALO
 
         private void OnTick(object sender, EventArgs args)
         {
-            // If the cheat has been entered
-            if (Tools.HasCheatBeenEntered("concealment"))
-            {
-                if (Enabled)
-                {
-                    DisableSpell();
-                }
-                else
-                {
-                    EnableSpell();
-                }
-            }
-
             // Execute the spell contents on a tick
             ExecuteSpell();
         }
 
-        private void EnableSpell()
+        public override void EnableSpell()
         {
             // if the player is on a vehicle, return
             if (Game.Player.Character.CurrentVehicle != null)
@@ -71,7 +58,7 @@ namespace AnimeSpells.ALO
             Enabled = true;
         }
 
-        private void ExecuteSpell()
+        public override void ExecuteSpell()
         {
             // If is not enabled, return
             if (!Enabled)
@@ -90,7 +77,7 @@ namespace AnimeSpells.ALO
             }
         }
 
-        private void DisableSpell()
+        public override void DisableSpell()
         {
             // Reset the alpha and mark as disabled
             Game.Player.Character.Alpha = 255;
