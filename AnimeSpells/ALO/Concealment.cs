@@ -1,6 +1,7 @@
-using GTA;
+﻿using GTA;
 using GTA.Native;
 using System;
+using System.Collections.Generic;
 
 namespace AnimeSpells.ALO
 {
@@ -10,6 +11,8 @@ namespace AnimeSpells.ALO
     /// </summary>
     public class Concealment : Script
     {
+        private Ped[] Peds = new Ped[0];
+        private int NextFetch = 0;
         private bool InternalEnabled { get; set; } = false;
         public bool Enabled
         {
@@ -29,8 +32,8 @@ namespace AnimeSpells.ALO
                         return;
                     }
 
-                    // Get all of the peds around the player (maybe 50 will get us in trouble, investigate later)
-                    foreach (Ped ped in World.GetNearbyPeds(Game.Player.Character.Position, 50))
+                    // Iterate over all of the peds in the map
+                    foreach (Ped ped in Peds)
                     {
                         // If the ped is on combat against the player
                         if (ped.IsInCombatAgainst(Game.Player.Character))
@@ -68,6 +71,7 @@ namespace AnimeSpells.ALO
             // - The spell is disabled when in contact with other enemies or enemy habilities
             // - You can be Heard, so certain actions like shooting or entering a vehicle will disable the incantation
             Tick += OnTick;
+            Aborted += OnAborted;
         }
 
         private void OnTick(object sender, EventArgs args)
@@ -77,6 +81,15 @@ namespace AnimeSpells.ALO
             {
                 // Alternate the enabled status
                 Enabled = !Enabled;
+            }
+
+            // If the current time is higher or equal than the next fetch
+            if (Game.GameTime >= NextFetch)
+            {
+                // Save all of the peds
+                Peds = World.GetAllPeds();
+                // And set the next time to fetch
+                NextFetch = Game.GameTime + 1000;
             }
 
             // If the spell is enabled
@@ -99,6 +112,12 @@ namespace AnimeSpells.ALO
                     Enabled = false;
                 }
             }
+        }
+
+        private void OnAborted(object sender, EventArgs args)
+        {
+            // Disable the spell
+            Enabled = false;
         }
     }
 }
