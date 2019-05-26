@@ -171,7 +171,7 @@ namespace AnimeSpells.Konosuba
                     Wait(0);
                 }
                 // Create a blimp type explosion with a radius of 1000
-                World.AddExplosion(Position, ExplosionType.Blimp, 1000, 0, true, false);
+                World.AddOwnedExplosion(Game.Player.Character, Position, ExplosionType.Blimp, 1000, 0, true, false);
                 // Destroy the blip
                 MarkerBlip.Remove();
                 MarkerBlip = null;
