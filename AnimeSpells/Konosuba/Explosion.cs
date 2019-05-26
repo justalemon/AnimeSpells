@@ -1,6 +1,7 @@
 ﻿using GTA;
 using GTA.Math;
 using GTA.Native;
+using NAudio.Wave;
 using System;
 using System.Drawing;
 
@@ -25,6 +26,12 @@ namespace AnimeSpells.Konosuba
     /// </summary>
     public class Explosion : Script
     {
+        /// <summary>
+        /// The value of the SFX Volume in the Audio Settings.
+        /// </summary>
+        private float Volume => Function.Call<int>(Hash.GET_PROFILE_SETTING, 300) / 10f;
+        private WaveOutEvent Output = new WaveOutEvent();
+        private AudioFileReader File = new AudioFileReader("scripts\\AnimeSpells\\MeguminExplosion.mp3");
         /// <summary>
         /// The current status of the explosion.
         /// </summary>
@@ -82,6 +89,13 @@ namespace AnimeSpells.Konosuba
                 }
             }
 
+            // If the playback volume is not the desired one
+            if (Output.Volume != Volume)
+            {
+                // Set the SFX volume as the NAudio volume
+                Output.Volume = Volume;
+            }
+
             // If the current status is not Disabled or the permanent mode is enabled
             if (Status != ExplosionStatus.Disabled || Permanent)
             {
@@ -95,8 +109,8 @@ namespace AnimeSpells.Konosuba
                 // Disable the fire/attack control
                 Game.DisableControlThisFrame(0, Control.Attack);
                 Game.DisableControlThisFrame(0, Control.Attack2);
-                // If the user just used the disabled control
-                if (Game.IsControlJustPressed(0, Control.Attack))
+                // If the user just used the disabled control and the current state is not firing
+                if (Game.IsControlJustPressed(0, Control.Attack) && Status != ExplosionStatus.Firing)
                 {
                     // Set the next status
                     Status = NextStatus;
@@ -134,6 +148,28 @@ namespace AnimeSpells.Konosuba
             // If the current status is firing
             else if (Status == ExplosionStatus.Firing)
             {
+                // If the total time is the same as the current time (aka it has played once)
+                if (File.TotalTime == File.CurrentTime)
+                {
+                    // Stop the output just in case
+                    Output.Stop();
+                    // Reset the current time to zero
+                    File.CurrentTime = TimeSpan.Zero;
+                }
+                // Otherwise
+                else
+                {
+                    // Initialize the playback of the file
+                    Output.Init(File);
+                }
+                // Then play the explosion sound
+                Output.Play();
+                // Wait while the audio has not finished the playback
+                while (File.TotalTime != File.CurrentTime)
+                {
+                    // Just wait
+                    Wait(0);
+                }
                 // Create a blimp type explosion with a radius of 1000
                 World.AddExplosion(Position, ExplosionType.Blimp, 1000, 0, true, false);
                 // Destroy the blip
@@ -167,6 +203,20 @@ namespace AnimeSpells.Konosuba
             {
                 // Remove it from the map
                 MarkerBlip.Remove();
+            }
+            // If the audio file is still loaded
+            if (File != null)
+            {
+                // Stop the playback just in case
+                Output.Stop();
+                // Dispose the file
+                File.Dispose();
+            }
+            // If the audio output is still available
+            if (Output != null)
+            {
+                // Dispose the output
+                Output.Dispose();
             }
         }
     }
