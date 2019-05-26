@@ -21,7 +21,7 @@ namespace AnimeSpells.ALO
         /// <summary>
         /// Internal activation of the spell.
         /// </summary>
-        private bool InternalEnabled { get; set; } = false;
+        private bool InternalEnabled = false;
         /// <summary>
         /// Activation for the Concealment spell.
         /// </summary>
