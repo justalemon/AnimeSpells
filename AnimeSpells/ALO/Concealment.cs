@@ -1,4 +1,4 @@
-﻿using GTA;
+using GTA;
 using GTA.Native;
 using System;
 
@@ -42,7 +42,6 @@ namespace AnimeSpells.ALO
                     }
 
                     // Set the alpha of the player to zero and hide the weapon
-                    Game.Player.Character.Weapons.Select(WeaponHash.Unarmed);
                     Game.Player.Character.Alpha = 50;
                     Function.Call(Hash.SET_POLICE_IGNORE_PLAYER, Game.Player, true); // SET_POLICE_IGNORE_PLAYER
                     Function.Call(Hash.SET_EVERYONE_IGNORE_PLAYER, Game.Player, true); // SET_EVERYONE_IGNORE_PLAYER
@@ -53,6 +52,10 @@ namespace AnimeSpells.ALO
                     Game.Player.Character.Alpha = 255;
                     Function.Call(Hash.SET_POLICE_IGNORE_PLAYER, Game.Player, false); // SET_POLICE_IGNORE_PLAYER
                     Function.Call(Hash.SET_EVERYONE_IGNORE_PLAYER, Game.Player, false); // SET_EVERYONE_IGNORE_PLAYER
+                    if (Game.Player.Character.Weapons.CurrentWeaponObject != null)
+                    {
+                        Game.Player.Character.Weapons.CurrentWeaponObject.ResetAlpha();
+                    }
                 }
             }
         }
@@ -82,8 +85,15 @@ namespace AnimeSpells.ALO
                 // Disable the enter vehicle button/key
                 Game.DisableControlThisFrame(0, Control.Enter);
 
-                // If the player has changed the weapon from fists
-                if (Game.Player.Character.Weapons.Current.Hash != WeaponHash.Unarmed)
+                // If the player weapon has a prop and the alpha of it is not set to 50
+                if (Game.Player.Character.Weapons.CurrentWeaponObject != null && Game.Player.Character.Weapons.CurrentWeaponObject.Alpha != 50)
+                {
+                    // Set the current alpha to 50
+                    Game.Player.Character.Weapons.CurrentWeaponObject.Alpha = 50;
+                }
+
+                // If the player has just tried to fire a weapon
+                if (Game.IsControlJustPressed(0, Control.Attack))
                 {
                     // Disable the spell
                     Enabled = false;
