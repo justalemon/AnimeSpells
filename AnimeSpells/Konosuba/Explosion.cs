@@ -111,8 +111,15 @@ namespace AnimeSpells.Konosuba
                 // Disable the fire/attack control
                 Game.DisableControlThisFrame(0, Control.Attack);
                 Game.DisableControlThisFrame(0, Control.Attack2);
+                Game.DisableControlThisFrame(0, Control.Phone);
+                // If the user pressed the open phone button while on the set phase
+                if (Game.IsControlJustPressed(0, Control.Phone) && Status == ExplosionStatus.Set)
+                {
+                    // Return back to targeting
+                    Status = ExplosionStatus.Targeting;
+                }
                 // If the user just used the disabled control and the current state is not audio or firing
-                if (Game.IsControlJustPressed(0, Control.Attack) && Status != ExplosionStatus.Audio && Status != ExplosionStatus.Firing)
+                else if (Game.IsControlJustPressed(0, Control.Attack) && Status != ExplosionStatus.Audio && Status != ExplosionStatus.Firing)
                 {
                     // Set the next status
                     Status = NextStatus;
