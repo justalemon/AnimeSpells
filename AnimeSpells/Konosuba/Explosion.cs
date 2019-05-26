@@ -15,8 +15,9 @@ namespace AnimeSpells.Konosuba
         Disabled = 0,
         Targeting = 1,
         Set = 2,
-        Firing = 3,
-        Ragdoll = 4
+        Audio = 3,
+        Firing = 4,
+        Ragdoll = 5
     }
 
     /// <summary>
@@ -58,6 +59,7 @@ namespace AnimeSpells.Konosuba
             // Add our tick event and abort events
             Tick += OnTick;
             Aborted += OnAborted;
+            Output.PlaybackStopped += OnPlaybackStopped;
         }
 
         private void OnTick(object sender, EventArgs args)
@@ -109,8 +111,8 @@ namespace AnimeSpells.Konosuba
                 // Disable the fire/attack control
                 Game.DisableControlThisFrame(0, Control.Attack);
                 Game.DisableControlThisFrame(0, Control.Attack2);
-                // If the user just used the disabled control and the current state is not firing
-                if (Game.IsControlJustPressed(0, Control.Attack) && Status != ExplosionStatus.Firing)
+                // If the user just used the disabled control and the current state is not audio or firing
+                if (Game.IsControlJustPressed(0, Control.Attack) && Status != ExplosionStatus.Audio && Status != ExplosionStatus.Firing)
                 {
                     // Set the next status
                     Status = NextStatus;
@@ -140,36 +142,44 @@ namespace AnimeSpells.Konosuba
             // If the current status is targeted
             else if (Status == ExplosionStatus.Set)
             {
-                // Draw a red rotating marker
-                World.DrawMarker((MarkerType)27, Position, Vector3.Zero, Vector3.Zero, new Vector3(10, 10, 10), Color.OrangeRed, false, false, 0, true, "", "", false);
+                // Draw a yellow rotating marker
+                World.DrawMarker((MarkerType)27, Position, Vector3.Zero, Vector3.Zero, new Vector3(10, 10, 10), Color.Yellow, false, false, 0, true, "", "", false);
+                // Change the blip color to yellow
+                MarkerBlip.Color = BlipColor.Yellow;
+            }
+            // If the current status is the explosion audio
+            else if (Status == ExplosionStatus.Audio)
+            {
+                // Draw some markers arround the explosion location
+                World.DrawMarker((MarkerType)27, Position, Vector3.Zero, Vector3.Zero, new Vector3(10, 10, 1), Color.OrangeRed, false, false, 0, true, "", "", false);
                 // Change the blip color to red
                 MarkerBlip.Color = BlipColor.Red;
+
+                // If we are not playing the audio
+                if (Output.PlaybackState != PlaybackState.Playing)
+                {
+                    // If the total time is the same as the current time (aka it has played once)
+                    if (File.TotalTime == File.CurrentTime)
+                    {
+                        // Stop the output just in case
+                        Output.Stop();
+                        // Reset the current time to zero
+                        File.CurrentTime = TimeSpan.Zero;
+                    }
+                    // Otherwise
+                    else
+                    {
+                        // Initialize the playback of the file
+                        Output.Init(File);
+                    }
+
+                    // Then play the explosion sound
+                    Output.Play();
+                }
             }
             // If the current status is firing
             else if (Status == ExplosionStatus.Firing)
             {
-                // If the total time is the same as the current time (aka it has played once)
-                if (File.TotalTime == File.CurrentTime)
-                {
-                    // Stop the output just in case
-                    Output.Stop();
-                    // Reset the current time to zero
-                    File.CurrentTime = TimeSpan.Zero;
-                }
-                // Otherwise
-                else
-                {
-                    // Initialize the playback of the file
-                    Output.Init(File);
-                }
-                // Then play the explosion sound
-                Output.Play();
-                // Wait while the audio has not finished the playback
-                while (File.TotalTime != File.CurrentTime)
-                {
-                    // Just wait
-                    Wait(0);
-                }
                 // Create a blimp type explosion with a radius of 1000
                 World.AddOwnedExplosion(Game.Player.Character, Position, ExplosionType.Blimp, 1000, 0, true, false);
                 // Destroy the blip
@@ -193,6 +203,16 @@ namespace AnimeSpells.Konosuba
             {
                 // Ragdoll the player during 1ms
                 Function.Call(Hash.SET_PED_TO_RAGDOLL, Game.Player.Character, 1, 1, 1, true, true, false);
+            }
+        }
+
+        public void OnPlaybackStopped(object sender, StoppedEventArgs args)
+        {
+            // If we are currently playing the audio
+            if (Status == ExplosionStatus.Audio)
+            {
+                // Change the mode to firing
+                Status = ExplosionStatus.Firing;
             }
         }
 
