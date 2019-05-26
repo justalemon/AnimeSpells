@@ -32,7 +32,7 @@ namespace AnimeSpells.Konosuba
         /// </summary>
         private float Volume => Function.Call<int>(Hash.GET_PROFILE_SETTING, 300) / 10f;
         private WaveOutEvent Output = new WaveOutEvent();
-        private AudioFileReader File = new AudioFileReader("scripts\\AnimeSpells\\MeguminExplosion.mp3");
+        private AudioFileReader File = new AudioFileReader("scripts\\AnimeSpells\\Explosion.mp3");
         /// <summary>
         /// The current status of the explosion.
         /// </summary>
