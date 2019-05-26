@@ -43,7 +43,7 @@ namespace AnimeSpells.ALO
 
                     // Set the alpha of the player to zero and hide the weapon
                     Game.Player.Character.Weapons.Select(WeaponHash.Unarmed);
-                    Game.Player.Character.Alpha = 0;
+                    Game.Player.Character.Alpha = 50;
                     Function.Call(Hash.SET_POLICE_IGNORE_PLAYER, Game.Player, true); // SET_POLICE_IGNORE_PLAYER
                     Function.Call(Hash.SET_EVERYONE_IGNORE_PLAYER, Game.Player, true); // SET_EVERYONE_IGNORE_PLAYER
                 }
