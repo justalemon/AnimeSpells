@@ -1,4 +1,4 @@
-﻿using GTA;
+using GTA;
 using GTA.Native;
 using System;
 
@@ -53,7 +53,7 @@ namespace AnimeSpells.ALO
 
             if (Enabled)
             {
-                Function.Call(Hash.SET_PED_MAX_TIME_UNDERWATER, Game.Player.Character, UnderwaterTime);
+                Function.Call(Hash.SET_PED_MAX_TIME_UNDERWATER, Game.Player.Character, UnderwaterTime++);
             }
         }
     }
