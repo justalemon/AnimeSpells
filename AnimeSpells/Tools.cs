@@ -72,5 +72,12 @@ namespace AnimeSpells
         {
             return Function.Call<bool>(Hash._0x557E43C447E700A8, Game.GenerateHash(cheat));
         }
+
+        public static void ShowHelp(string message, int duration = 5000)
+        {
+            Function.Call(Hash._SET_TEXT_COMPONENT_FORMAT, "STRING"); // BEGIN_TEXT_COMMAND_DISPLAY_HELP
+            Function.Call(Hash._ADD_TEXT_COMPONENT_STRING, message); // ADD_TEXT_COMPONENT_SUBSTRING_PLAYER_NAME
+            Function.Call(Hash._DISPLAY_HELP_TEXT_FROM_STRING_LABEL, 0, false, true, duration); // END_TEXT_COMMAND_DISPLAY_HELP
+        }
     }
 }
