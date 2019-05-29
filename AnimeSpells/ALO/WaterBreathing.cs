@@ -1,4 +1,4 @@
-using GTA;
+﻿using GTA;
 using GTA.Native;
 using System;
 
@@ -10,25 +10,52 @@ namespace AnimeSpells.ALO
     /// </summary>
     public class WaterBreathing : Script
     {
-        private float UnderwaterTime = Function.Call<float>(Hash.GET_PLAYER_UNDERWATER_TIME_REMAINING, Game.Player);
-        private bool InternalEnabled = false;
-        public bool Enabled
+        /// <summary>
+        /// The internal player definition for stats.
+        /// </summary>
+        private int PlayerId
         {
-            get => InternalEnabled;
-            set
+            get
             {
-                if (value)
+                switch (Game.Player.Character.Model.Hash)
                 {
-                    UnderwaterTime = Function.Call<float>(Hash.GET_PLAYER_UNDERWATER_TIME_REMAINING, Game.Player);
+                    case -1692214353: // Franklin
+                        return 0;
+                    case 225514697: // Michael
+                        return 1;
+                    case -1686040670:
+                        return 2;
+                    default:
+                        return -1;
                 }
-                else
-                {
-                    Function.Call(Hash.SET_PED_MAX_TIME_UNDERWATER, Game.Player.Character, UnderwaterTime);
-                }
-
-                InternalEnabled = value;
             }
         }
+        /// <summary>
+        /// The value of the Lung Capacity stat.
+        /// </summary>
+        private int LungCapacity
+        {
+            get
+            {
+                // Create some variables to store the output
+                int Output = 25;
+                // If you are playing with M, T or F
+                if (PlayerId != -1)
+                {
+                    // Call the native and return the value of the lung capacity stat
+                    unsafe
+                    {
+                        Function.Call<bool>(Hash.STAT_GET_INT, Game.GenerateHash("SP0_LUNG_CAPACITY"), &Output, 1);
+                    }
+                }
+                // Finally return the value
+                return Output;
+            }
+        }
+        /// <summary>
+        /// If the spell is enabled or disabled.
+        /// </summary>
+        private bool Enabled = false;
 
         public WaterBreathing()
         {
@@ -52,11 +79,20 @@ namespace AnimeSpells.ALO
                 Enabled = !Enabled;
                 // And notify the user
                 Tools.ShowHelp("Water Breathing has been " + (Enabled ? "~g~enabled~s~" : "~r~disabled~s~") + "!" );
+
+                // If the spell has been disabled
+                if (!Enabled)
+                {
+                    // Set the max time underwater just like the stat
+                    Function.Call(Hash.SET_PED_MAX_TIME_UNDERWATER, Game.Player.Character, (float)LungCapacity);
+                }
             }
 
+            // If the spell is enabled
             if (Enabled)
             {
-                Function.Call(Hash.SET_PED_MAX_TIME_UNDERWATER, Game.Player.Character, UnderwaterTime++);
+                // Set the max time underwater a number above to the current value
+                Function.Call(Hash.SET_PED_MAX_TIME_UNDERWATER, Game.Player.Character, (float)int.MaxValue);
             }
         }
     }
