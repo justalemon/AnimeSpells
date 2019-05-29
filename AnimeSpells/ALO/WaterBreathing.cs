@@ -41,14 +41,17 @@ namespace AnimeSpells.ALO
             // If the user introduced one of the cheats
             if (Tools.HasCheatBeenEntered("waterbreathing") || Tools.HasCheatBeenEntered("breathing") || Tools.HasCheatBeenEntered("wb"))
             {
-                // If the player is swiming underwater, return
+                // If the player is swiming underwater, notify about it and return
                 if (Game.Player.Character.IsSwimmingUnderWater)
                 {
+                    Tools.ShowHelp("You can't enable or disable Water Breathing if you are underwater for safety reasons.");
                     return;
                 }
 
                 // Alternate the activation of the spell
                 Enabled = !Enabled;
+                // And notify the user
+                Tools.ShowHelp("Water Breathing has been " + (Enabled ? "~g~enabled~s~" : "~r~disabled~s~") + "!" );
             }
 
             if (Enabled)
