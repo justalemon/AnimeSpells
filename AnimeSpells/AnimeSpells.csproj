@@ -57,6 +57,7 @@
     <Compile Include="ALO\Concealment.cs" />
     <Compile Include="ALO\WaterBreathing.cs" />
     <Compile Include="Konosuba\Explosion.cs" />
+    <Compile Include="Konosuba\Steal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tools.cs" />
   </ItemGroup>
