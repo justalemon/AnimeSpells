@@ -14,11 +14,11 @@ namespace AnimeSpells.ALO
         /// <summary>
         /// Internal activation of the spell.
         /// </summary>
-        private bool InternalEnabled = false;
+        private static bool InternalEnabled = false;
         /// <summary>
         /// The activation of the Shield for the player.
         /// </summary>
-        public bool Enabled
+        public static bool Enabled
         {
             // Set the value that we got
             get => InternalEnabled;
@@ -51,7 +51,7 @@ namespace AnimeSpells.ALO
                 }
             }
         }
-        private int Time = 0;
+        private static int Time = 0;
         private const int MaxTime = 5000;
 
         public ButterflyShieldSingle()

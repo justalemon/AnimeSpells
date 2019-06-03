@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.28803.452
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnimeSpells", "AnimeSpells\AnimeSpells.csproj", "{5DC2F7EC-E5BA-444B-AD26-B97BCA4C9B79}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnimeSpells.Menu", "AnimeSpells.Menu\AnimeSpells.Menu.csproj", "{2AF0415E-B18B-4D80-AF94-AD192E271EF3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -15,6 +17,10 @@ Global
 		{5DC2F7EC-E5BA-444B-AD26-B97BCA4C9B79}.Debug|x64.Build.0 = Debug|x64
 		{5DC2F7EC-E5BA-444B-AD26-B97BCA4C9B79}.Release|x64.ActiveCfg = Release|x64
 		{5DC2F7EC-E5BA-444B-AD26-B97BCA4C9B79}.Release|x64.Build.0 = Release|x64
+		{2AF0415E-B18B-4D80-AF94-AD192E271EF3}.Debug|x64.ActiveCfg = Debug|x64
+		{2AF0415E-B18B-4D80-AF94-AD192E271EF3}.Debug|x64.Build.0 = Debug|x64
+		{2AF0415E-B18B-4D80-AF94-AD192E271EF3}.Release|x64.ActiveCfg = Release|x64
+		{2AF0415E-B18B-4D80-AF94-AD192E271EF3}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
