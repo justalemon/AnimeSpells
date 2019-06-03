@@ -13,7 +13,7 @@ namespace AnimeSpells.ALO
         /// <summary>
         /// The internal player definition for stats.
         /// </summary>
-        private int PlayerId
+        private static int PlayerId
         {
             get
             {
@@ -33,7 +33,7 @@ namespace AnimeSpells.ALO
         /// <summary>
         /// The value of the Lung Capacity stat.
         /// </summary>
-        private int LungCapacity
+        private static int LungCapacity
         {
             get
             {
@@ -53,9 +53,33 @@ namespace AnimeSpells.ALO
             }
         }
         /// <summary>
+        /// Internal activation of the spell.
+        /// </summary>
+        private static bool InternalEnabled = false;
+        /// <summary>
         /// If the spell is enabled or disabled.
         /// </summary>
-        private bool Enabled = false;
+        private static bool Enabled
+        {
+            get => InternalEnabled;
+            set
+            {
+                // If the spell has been enabled
+                if (value)
+                {
+                    // Set the max time underwater a number above to the current value
+                    Function.Call(Hash.SET_PED_MAX_TIME_UNDERWATER, Game.Player.Character, (float)int.MaxValue);
+                }
+                // Otherwise
+                else
+                {
+                    // Set the max time underwater just like the stat
+                    Function.Call(Hash.SET_PED_MAX_TIME_UNDERWATER, Game.Player.Character, (float)LungCapacity);
+                }
+                // Set the value of the spell
+                InternalEnabled = value;
+            }
+        }
 
         public WaterBreathing()
         {
@@ -79,20 +103,6 @@ namespace AnimeSpells.ALO
                 Enabled = !Enabled;
                 // And notify the user
                 Tools.ShowHelp("Water Breathing has been " + (Enabled ? "~g~enabled~s~" : "~r~disabled~s~") + "!" );
-
-                // If the spell has been disabled
-                if (!Enabled)
-                {
-                    // Set the max time underwater just like the stat
-                    Function.Call(Hash.SET_PED_MAX_TIME_UNDERWATER, Game.Player.Character, (float)LungCapacity);
-                }
-            }
-
-            // If the spell is enabled
-            if (Enabled)
-            {
-                // Set the max time underwater a number above to the current value
-                Function.Call(Hash.SET_PED_MAX_TIME_UNDERWATER, Game.Player.Character, (float)int.MaxValue);
             }
         }
     }
