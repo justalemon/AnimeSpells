@@ -59,7 +59,7 @@ namespace AnimeSpells.ALO
         /// <summary>
         /// If the spell is enabled or disabled.
         /// </summary>
-        private static bool Enabled
+        public static bool Enabled
         {
             get => InternalEnabled;
             set

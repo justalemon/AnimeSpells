@@ -36,7 +36,7 @@ namespace AnimeSpells.Konosuba
         /// <summary>
         /// The current status of the explosion.
         /// </summary>
-        public ExplosionStatus Status = ExplosionStatus.Disabled;
+        public static ExplosionStatus Status = ExplosionStatus.Disabled;
         /// <summary>
         /// The next status of the targeting
         /// </summary>

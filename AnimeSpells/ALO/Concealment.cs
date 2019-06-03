@@ -13,7 +13,7 @@ namespace AnimeSpells.ALO
         /// <summary>
         /// The peds to interate for the combat check.
         /// </summary>
-        private Ped[] Peds = new Ped[0];
+        private static Ped[] Peds = new Ped[0];
         /// <summary>
         /// The game time where we should fetch a new copy of the list of peds.
         /// </summary>
@@ -21,11 +21,11 @@ namespace AnimeSpells.ALO
         /// <summary>
         /// Internal activation of the spell.
         /// </summary>
-        private bool InternalEnabled = false;
+        private static bool InternalEnabled = false;
         /// <summary>
         /// Activation for the Concealment spell.
         /// </summary>
-        public bool Enabled
+        public static bool Enabled
         {
             // Return the internal value
             get => InternalEnabled;
