@@ -20,13 +20,14 @@ namespace AnimeSpells.Menu
         /// </summary>
         public UIMenuCheckboxItem ButterflyShield = new UIMenuCheckboxItem("ALO: Butterfly Shield (Single)", ALO.ButterflyShieldSingle.Enabled, "Toggles the activation of Butterfly Shield for a single target.");
         /// <summary>
-        /// Item that toggles the Concealment spell.
-        /// </summary>
-        public UIMenuCheckboxItem Concealment = new UIMenuCheckboxItem("ALO: Concealment", ALO.Concealment.Enabled, "Toggles the activation of Concealment.");
-        /// <summary>
         /// Item that toggles the Water Breathing spell.
         /// </summary>
-        public UIMenuCheckboxItem WaterBreathing = new UIMenuCheckboxItem("ALO: Water Breathing", ALO.Concealment.Enabled, "Toggles the activation of Water Breathing.~n~~n~Warning: This bypasses the underwater check.");
+        public UIMenuCheckboxItem WaterBreathing = new UIMenuCheckboxItem("ALO: Water Breathing", ALO.WaterBreathing.Enabled, "Toggles the activation of Water Breathing.~n~~n~Warning: This bypasses the underwater check.");
+
+        /// <summary>
+        /// Item that toggles the Concealment spell.
+        /// </summary>
+        public UIMenuCheckboxItem Concealment = new UIMenuCheckboxItem("Konosuba: Concealment", Konosuba.Concealment.Enabled, "Toggles the activation of Concealment.");
         /// <summary>
         /// Item that changes the status of the Explosion spell.
         /// </summary>
@@ -38,8 +39,8 @@ namespace AnimeSpells.Menu
             Pool.Add(MainMenu);
             // Then, add the items into the menu
             MainMenu.AddItem(ButterflyShield);
-            MainMenu.AddItem(Concealment);
             MainMenu.AddItem(WaterBreathing);
+            MainMenu.AddItem(Concealment);
             MainMenu.AddItem(Explosion);
 
             // Over here we subscribe our events
@@ -65,11 +66,10 @@ namespace AnimeSpells.Menu
             // If the menu is open
             if (MainMenu.Visible)
             {
-                // Update the checkboxes
+                // Update the checkboxes and lists
                 ButterflyShield.Checked = ALO.ButterflyShieldSingle.Enabled;
-                Concealment.Checked = ALO.Concealment.Enabled;
                 WaterBreathing.Checked = ALO.WaterBreathing.Enabled;
-                // And the lists
+                Concealment.Checked = Konosuba.Concealment.Enabled;
                 Explosion.Index = (int)Konosuba.Explosion.Status;
             }
         }
@@ -81,13 +81,13 @@ namespace AnimeSpells.Menu
             {
                 ALO.ButterflyShieldSingle.Enabled = check;
             }
-            else if (item == Concealment)
-            {
-                ALO.Concealment.Enabled = check;
-            }
             else if (item == WaterBreathing)
             {
                 ALO.WaterBreathing.Enabled = check;
+            }
+            else if (item == Concealment)
+            {
+                Konosuba.Concealment.Enabled = check;
             }
         }
 

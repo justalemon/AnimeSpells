@@ -2,11 +2,12 @@
 using GTA.Native;
 using System;
 
-namespace AnimeSpells.ALO
+namespace AnimeSpells.Konosuba
 {
     /// <summary>
     /// Concealment
-    /// https://swordartonline.fandom.com/wiki/Concealment
+    /// "A superior version of the Lurk skill. This grants ... invisibility for a ... span of time."
+    /// From https://konosuba.fandom.com/wiki/Satou_Kazuma#Abilities
     /// </summary>
     public class Concealment : Script
     {
