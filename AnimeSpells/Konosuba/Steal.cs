@@ -1,8 +1,6 @@
-using GTA;
-using GTA.Math;
+﻿using GTA;
 using GTA.Native;
 using System;
-using System.Drawing;
 
 namespace AnimeSpells.Konosuba
 {
@@ -23,38 +21,14 @@ namespace AnimeSpells.Konosuba
             // Disable the X key
             Game.DisableControlThisFrame(0, Control.VehicleDuck);
 
-            // Get the raycast of the crosshair
-            RaycastResult Result = World.GetCrosshairCoordinates();
+            // Save the targeted ped here
+            Ped Target = Raycasting.TargetedPed;
 
-            // If there is not an entity being pointed, return
-            if (Result.HitEntity == null)
+            // If there is not a being pointed, the ped is dead or the ped is the player, return
+            if (Target == null || Target.IsDead || Target == Game.Player.Character)
             {
                 return;
             }
-
-            // If the entity is not a ped, return
-            if (!(Result.HitEntity is Ped))
-            {
-                return;
-            }
-
-            // Create a ped
-            Ped Target = (Ped)Result.HitEntity;
-
-            // If the target ped is dead, return
-            if (Target.IsDead)
-            {
-                return;
-            }
-
-            // If the target is the player ped, return
-            if (Target == Game.Player.Character)
-            {
-                return;
-            }
-
-            // Create a marker on the top of the ped
-            World.DrawMarker(MarkerType.UpsideDownCone, Target.Position + new Vector3(0, 0, 1), Vector3.Zero, Vector3.Zero, new Vector3(0.25f, 0.25f, 0.25f), Color.Cyan);
 
             // If the player pressed the 1 key
             if (Game.IsControlJustPressed(0, Control.VehicleDuck))

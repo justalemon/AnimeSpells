@@ -130,7 +130,7 @@ namespace AnimeSpells.Konosuba
             if (Status == ExplosionStatus.Targeting)
             {
                 // Update the explosion position
-                Position = World.GetCrosshairCoordinates().HitCoords;
+                Position = Raycasting.Position;
                 // Create a green static marker
                 World.DrawMarker((MarkerType)27, Position, Vector3.Zero, Vector3.Zero, new Vector3(10, 10, 10), Color.LightGreen);
                 // If there is not a blip created
