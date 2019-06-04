@@ -7,6 +7,8 @@ namespace AnimeSpells.Menu
 {
     public class Menu : Script
     {
+        #region Basics
+
         /// <summary>
         /// The Menu Pool that stores and manages all of our menus.
         /// </summary>
@@ -15,6 +17,11 @@ namespace AnimeSpells.Menu
         /// The Main Menu for changing the spells.
         /// </summary>
         public UIMenu MainMenu = new UIMenu("", "");
+
+        #endregion
+
+        #region ALO
+
         /// <summary>
         /// Item that toggles the Butterfly Shield (Single) spell.
         /// </summary>
@@ -24,6 +31,10 @@ namespace AnimeSpells.Menu
         /// </summary>
         public UIMenuCheckboxItem WaterBreathing = new UIMenuCheckboxItem("ALO: Water Breathing", ALO.WaterBreathing.Enabled, "Toggles the activation of Water Breathing.~n~~n~Warning: This bypasses the underwater check.");
 
+        #endregion
+
+        #region Konosuba
+
         /// <summary>
         /// Item that toggles the Concealment spell.
         /// </summary>
@@ -32,6 +43,8 @@ namespace AnimeSpells.Menu
         /// Item that changes the status of the Explosion spell.
         /// </summary>
         public UIMenuListItem Explosion = new UIMenuListItem("Konosuba: Explosion", Enum.GetValues(typeof(Konosuba.ExplosionStatus)).Cast<object>().ToList(), 0, "Changes the status of the Explosion spell.");
+
+        #endregion
 
         public Menu()
         {
