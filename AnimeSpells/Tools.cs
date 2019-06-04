@@ -1,4 +1,4 @@
-﻿using GTA;
+using GTA;
 using GTA.Math;
 using GTA.Native;
 
@@ -73,6 +73,12 @@ namespace AnimeSpells
             Function.Call(Hash._SET_TEXT_COMPONENT_FORMAT, "STRING"); // BEGIN_TEXT_COMMAND_DISPLAY_HELP
             Function.Call(Hash._ADD_TEXT_COMPONENT_STRING, message); // ADD_TEXT_COMPONENT_SUBSTRING_PLAYER_NAME
             Function.Call(Hash._DISPLAY_HELP_TEXT_FROM_STRING_LABEL, 0, false, true, duration); // END_TEXT_COMMAND_DISPLAY_HELP
+        }
+
+        
+        public static bool IsFriendly(this Ped GamePed)
+        {
+            return Game.Player.Character.GetRelationshipWithPed(GamePed) <= Relationship.Like && GamePed.GetRelationshipWithPed(Game.Player.Character) <= Relationship.Like;
         }
     }
 }
