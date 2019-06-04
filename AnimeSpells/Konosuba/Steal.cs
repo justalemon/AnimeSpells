@@ -1,4 +1,4 @@
-﻿using GTA;
+using GTA;
 using GTA.Math;
 using GTA.Native;
 using System;
@@ -67,7 +67,7 @@ namespace AnimeSpells.Konosuba
 
                 // Steal the current weapon of the enemy
                 // If we don't have the weapon
-                if (!Game.Player.Character.Weapons.IsWeaponValid(Target.Weapons.Current.Hash))
+                if (!Game.Player.Character.Weapons.HasWeapon(Target.Weapons.Current.Hash))
                 {
                     // Give the weapon and add the ammo
                     Game.Player.Character.Weapons.Give(Target.Weapons.Current.Hash, Target.Weapons.Current.Ammo, false, true);
