@@ -17,3 +17,13 @@ Another mod created from Anime, it adds some spells from series like SAO and Kon
 * GTA V 1.0.1604.0 (After Hours) or higher
 * [ScriptHookV](http://www.dev-c.com/gtav/scripthookv/) 1.0.1604.1 or higher
 * [ScriptHookVDotNet](https://github.com/crosire/scripthookvdotnet/releases) 2.10.9 or higher
+
+## Install
+
+* Drop all of the files into your `scripts` folder.
+
+## Changelog
+
+### 0.1
+
+* Initial Release
