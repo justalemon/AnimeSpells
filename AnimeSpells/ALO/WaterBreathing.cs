@@ -1,4 +1,5 @@
-﻿using GTA;
+﻿using Citron;
+using GTA;
 using GTA.Native;
 using System;
 
@@ -90,19 +91,19 @@ namespace AnimeSpells.ALO
         public void OnTick(object sender, EventArgs args)
         {
             // If the user introduced one of the cheats
-            if (Tools.HasCheatBeenEntered("waterbreathing") || Tools.HasCheatBeenEntered("breathing") || Tools.HasCheatBeenEntered("wb"))
+            if (Screen.HasCheatBeenEntered("waterbreathing") || Screen.HasCheatBeenEntered("breathing") || Screen.HasCheatBeenEntered("wb"))
             {
                 // If the player is swiming underwater, notify about it and return
                 if (Game.Player.Character.IsSwimmingUnderWater)
                 {
-                    Tools.ShowHelp("You can't enable or disable Water Breathing if you are underwater for safety reasons.");
+                    Screen.ShowHelp("You can't enable or disable Water Breathing if you are underwater for safety reasons.");
                     return;
                 }
 
                 // Alternate the activation of the spell
                 Enabled = !Enabled;
                 // And notify the user
-                Tools.ShowHelp("Water Breathing has been " + (Enabled ? "~g~enabled~s~" : "~r~disabled~s~") + "!" );
+                Screen.ShowHelp("Water Breathing has been " + (Enabled ? "~g~enabled~s~" : "~r~disabled~s~") + "!" );
             }
         }
     }

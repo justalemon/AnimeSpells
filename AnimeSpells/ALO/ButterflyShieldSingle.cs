@@ -1,4 +1,5 @@
-﻿using GTA;
+﻿using Citron;
+using GTA;
 using GTA.Math;
 using System;
 using System.Drawing;
@@ -63,7 +64,7 @@ namespace AnimeSpells.ALO
         private void OnTick(object sender, EventArgs e)
         {
             // If the cheat has been entered
-            if (Tools.HasCheatBeenEntered("shieldsingle") || Tools.HasCheatBeenEntered("shield"))
+            if (Screen.HasCheatBeenEntered("shieldsingle") || Screen.HasCheatBeenEntered("shield"))
             {
                 // Alternate the enabled status
                 Enabled = !Enabled;
@@ -73,7 +74,7 @@ namespace AnimeSpells.ALO
             if (Enabled && Time >= Game.GameTime)
             {
                 // Draw a marker around the player or vehicle
-                World.DrawMarker((MarkerType)27, Tools.Position, Vector3.Zero, Vector3.Zero, Tools.ShieldDiameter, Color.CadetBlue, false, false, 0, true, "", "", false);
+                World.DrawMarker(MarkerType.DebugSphere, PlayerData.Position, Vector3.Zero, Vector3.Zero, Tools.ShieldDiameter, Color.DeepSkyBlue.Clear(), false, false, 0, true, "", "", false);
                 // Make the player invincible if he is not
                 if (!Game.Player.Character.IsInvincible)
                 {

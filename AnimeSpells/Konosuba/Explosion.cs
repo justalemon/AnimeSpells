@@ -1,4 +1,5 @@
-﻿using GTA;
+﻿using Citron;
+using GTA;
 using GTA.Math;
 using GTA.Native;
 using NAudio.Wave;
@@ -65,13 +66,13 @@ namespace AnimeSpells.Konosuba
         private void OnTick(object sender, EventArgs args)
         {
             // If one of the explosion cheats has been entered
-            if (Tools.HasCheatBeenEntered("explosion") || Tools.HasCheatBeenEntered("exp"))
+            if (Screen.HasCheatBeenEntered("explosion") || Screen.HasCheatBeenEntered("exp"))
             {
                 // Set the status to the next value
                 Status = NextStatus;
             }
             // Ig the user wants to alterante the activation of the permanent mode
-            if (Tools.HasCheatBeenEntered("explosion permanent") || Tools.HasCheatBeenEntered("exp perm"))
+            if (Screen.HasCheatBeenEntered("explosion permanent") || Screen.HasCheatBeenEntered("exp perm"))
             {
                 // Alternate the activation of the permanent explosions
                 Permanent = !Permanent;

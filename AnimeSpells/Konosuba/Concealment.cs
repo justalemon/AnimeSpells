@@ -1,4 +1,5 @@
-﻿using GTA;
+﻿using Citron;
+using GTA;
 using GTA.Native;
 using System;
 
@@ -94,7 +95,7 @@ namespace AnimeSpells.Konosuba
         private void OnTick(object sender, EventArgs args)
         {
             // If the cheat has been entered
-            if (Tools.HasCheatBeenEntered("concealment") || Tools.HasCheatBeenEntered("con"))
+            if (Screen.HasCheatBeenEntered("concealment") || Screen.HasCheatBeenEntered("con"))
             {
                 // Alternate the enabled status
                 Enabled = !Enabled;
