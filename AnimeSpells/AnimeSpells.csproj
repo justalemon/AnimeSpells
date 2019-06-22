@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -34,6 +34,9 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="AnimeSpells.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <Reference Include="NAudio, Version=1.9.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\NAudio.1.9.0\lib\net35\NAudio.dll</HintPath>
     </Reference>
@@ -56,10 +59,12 @@
     <Reference Include="System.Xml" />
     <Compile Include="ALO\ButterflyShieldSingle.cs" />
     <Compile Include="ALO\HealingSingle.cs" />
+    <Compile Include="Configuration.cs" />
     <Compile Include="Konosuba\Concealment.cs" />
     <Compile Include="ALO\WaterBreathing.cs" />
     <Compile Include="Konosuba\Explosion.cs" />
     <Compile Include="Konosuba\Steal.cs" />
+    <Compile Include="Manager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Raycasting.cs" />
     <Compile Include="Tools.cs" />
