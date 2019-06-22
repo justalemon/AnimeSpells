@@ -1,4 +1,5 @@
-﻿using GTA;
+﻿using Citron;
+using GTA;
 using GTA.Native;
 using Newtonsoft.Json;
 using System;
@@ -72,8 +73,22 @@ namespace AnimeSpells
 
         private void OnTick(object sender, EventArgs e)
         {
+            // If the player entered the mana cheat
+            if (Screen.HasCheatBeenEntered("mana"))
+            {
+                // Ask for the user input
+                string Input = Game.GetUserInput(30);
+
+                // If the user input is valid and it can be parsed
+                if (!string.IsNullOrWhiteSpace(Input) && int.TryParse(Input, out int Output))
+                {
+                    // Set the mana value to the parsed input
+                    Mana = Output;
+                }
+            }
+
             // Calculate the values of the mana bar
-            float Width = Config.ManaMax == 0 ? Config.ManaWidth + Config.ManaOffsetWidth : (Config.ManaWidth + Config.ManaOffsetWidth) * (Mana / Config.ManaMax);
+            float Width = Config.ManaMax == 0 ? Config.ManaWidth + Config.ManaOffsetWidth : (Config.ManaWidth + Config.ManaOffsetWidth) * (Mana / (float)Config.ManaMax);
 
             // Draw the mana bar
             // Background
