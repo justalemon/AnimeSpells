@@ -4,6 +4,8 @@ namespace AnimeSpells
 {
     public class Configuration
     {
+        [JsonProperty("mana_max")]
+        public int ManaMax { get; set; }
         [JsonProperty("mana_x")]
         public float ManaX { get; set; }
         [JsonProperty("mana_y")]

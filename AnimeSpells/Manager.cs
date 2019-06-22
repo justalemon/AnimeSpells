@@ -1,4 +1,4 @@
-using GTA;
+﻿using GTA;
 using GTA.Native;
 using Newtonsoft.Json;
 using System;
@@ -21,6 +21,48 @@ namespace AnimeSpells
         /// Color for the foreground of the Mana bar.
         /// </summary>
         private Color Foreground = Color.FromArgb(255, 73, 149, 182);
+        /// <summary>
+        /// The internal value of the mana.
+        /// </summary>
+        private static int PrivateMana = Config.ManaMax;
+        /// <summary>
+        /// The current points of mana.
+        /// </summary>
+        public static int Mana
+        {
+            get
+            {
+                // If the maximum of mana is set to zero
+                if (Config.ManaMax == 0)
+                {
+                    // Return the max value of an int
+                    return int.MaxValue;
+                }
+                // Otherwise, return the set value
+                return PrivateMana;
+            }
+            set
+            {
+                // If the maximum of mana is set to zero
+                if (Config.ManaMax == 0)
+                {
+                    // Don't set anything, just return
+                    return;
+                }
+                // If the mana value is set to something over the maxiimum
+                else if (value > Config.ManaMax)
+                {
+                    // Just set the maximum
+                    PrivateMana = Config.ManaMax;
+                }
+                // Otherwise
+                else
+                {
+                    // Just set the value
+                    PrivateMana = value;
+                }
+            }
+        }
 
         public Manager()
         {
@@ -30,11 +72,14 @@ namespace AnimeSpells
 
         private void OnTick(object sender, EventArgs e)
         {
+            // Calculate the values of the mana bar
+            float Width = Config.ManaMax == 0 ? Config.ManaWidth + Config.ManaOffsetWidth : (Config.ManaWidth + Config.ManaOffsetWidth) * (Mana / Config.ManaMax);
+
             // Draw the mana bar
             // Background
             Function.Call(Hash.DRAW_RECT, Config.ManaX, Config.ManaY, Config.ManaWidth, Config.ManaHeight, Background.R, Background.G, Background.B, Background.A);
             // Foreground
-            Function.Call(Hash.DRAW_RECT, Config.ManaX + Config.ManaOffsetX, Config.ManaY + Config.ManaOffsetY, Config.ManaWidth + Config.ManaOffsetWidth, Config.ManaHeight + Config.ManaOffsetHeight, Foreground.R, Foreground.G, Foreground.B, Foreground.A);
+            Function.Call(Hash.DRAW_RECT, Config.ManaX + Config.ManaOffsetX, Config.ManaY + Config.ManaOffsetY, Width, Config.ManaHeight + Config.ManaOffsetHeight, Foreground.R, Foreground.G, Foreground.B, Foreground.A);
         }
     }
 }
