@@ -30,8 +30,9 @@ namespace AnimeSpells.Konosuba
     {
         /// <summary>
         /// The value of the SFX Volume in the Audio Settings.
+        /// Formulas: c / 10 (between 0-1) and c / 20 (between 0-0.5)
         /// </summary>
-        private float Volume => Function.Call<int>(Hash.GET_PROFILE_SETTING, 300) / 10f;
+        private float Volume => Function.Call<int>(Hash.GET_PROFILE_SETTING, 300) / 20f;
         private WaveOutEvent Output = new WaveOutEvent();
         private AudioFileReader File = new AudioFileReader("scripts\\AnimeSpells\\Explosion.mp3");
         /// <summary>
