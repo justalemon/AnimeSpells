@@ -1,4 +1,4 @@
-﻿using GTA;
+using GTA;
 using GTA.Native;
 using Newtonsoft.Json;
 using System;
@@ -16,11 +16,11 @@ namespace AnimeSpells
         /// <summary>
         /// Color for the background of the Mana bar.
         /// </summary>
-        private readonly Color Background { get; } = Color.FromArgb(220, 0, 0, 0);
+        private Color Background = Color.FromArgb(220, 0, 0, 0);
         /// <summary>
         /// Color for the foreground of the Mana bar.
         /// </summary>
-        private readonly Color Foreground = Color.FromArgb(255, 73, 149, 182);
+        private Color Foreground = Color.FromArgb(255, 73, 149, 182);
 
         public Manager()
         {
