@@ -17,8 +17,7 @@ namespace AnimeSpells.Konosuba
         Targeting = 1,
         Set = 2,
         Audio = 3,
-        Firing = 4,
-        Ragdoll = 5
+        Firing = 4
     }
 
     /// <summary>
@@ -42,7 +41,7 @@ namespace AnimeSpells.Konosuba
         /// <summary>
         /// The next status of the targeting
         /// </summary>
-        public ExplosionStatus NextStatus => (int)Status + 1 > (int)ExplosionStatus.Ragdoll ? ExplosionStatus.Disabled : (ExplosionStatus)((int)Status + 1);
+        public ExplosionStatus NextStatus => (int)Status + 1 > (int)ExplosionStatus.Firing ? ExplosionStatus.Disabled : (ExplosionStatus)((int)Status + 1);
         /// <summary>
         /// The position of the explosion.
         /// </summary>
@@ -203,15 +202,11 @@ namespace AnimeSpells.Konosuba
                 // Otherwise
                 else
                 {
-                    // Inmediately set the status to ragdoll
-                    Status = ExplosionStatus.Ragdoll;
+                    // Reduce the mana by 2000
+                    Manager.Mana += -2000;
+                    // And set the status to disabled
+                    Status = ExplosionStatus.Disabled;
                 }
-            }
-            // If the current status is ragdoll
-            else if (Status == ExplosionStatus.Ragdoll)
-            {
-                // Ragdoll the player during 1ms
-                Function.Call(Hash.SET_PED_TO_RAGDOLL, Game.Player.Character, 1, 1, 1, true, true, false);
             }
         }
 
