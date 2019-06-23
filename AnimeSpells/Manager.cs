@@ -98,8 +98,9 @@ namespace AnimeSpells
                 // Ragdoll the player during 1ms
                 Function.Call(Hash.SET_PED_TO_RAGDOLL, Game.Player.Character, 1, 1, 1, true, true, false);
             }
+
             // If the mana is not at the maximum
-            else if (Mana != Config.ManaMax && Game.GameTime >= NextTime)
+            if (Mana != Config.ManaMax && Game.GameTime >= NextTime)
             {
                 // Increase the mana by one
                 Mana += 1;
