@@ -9,6 +9,11 @@ namespace AnimeSpells
         [JsonProperty("mana_regen")]
         public int ManaRegen { get; set; }
 
+        [JsonProperty("count_x")]
+        public float CountX { get; set; }
+        [JsonProperty("count_y")]
+        public float CountY { get; set; }
+
         [JsonProperty("bar_x")]
         public float BarX { get; set; }
         [JsonProperty("bar_y")]

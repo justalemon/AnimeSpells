@@ -2,6 +2,9 @@
     "mana_max": 1000,
     "mana_regen": 50,
 
+    "count_x": 0.015,
+    "count_y": 0.758,
+
     "bar_x": 0.086,
     "bar_y": 0.79,
     "bar_w": 0.14,

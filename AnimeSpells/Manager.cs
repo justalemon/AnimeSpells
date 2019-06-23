@@ -1,9 +1,10 @@
-using Citron;
+﻿using Citron;
 using GTA;
 using GTA.Native;
 using Newtonsoft.Json;
 using System;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 
 namespace AnimeSpells
@@ -114,6 +115,15 @@ namespace AnimeSpells
             Function.Call(Hash.DRAW_RECT, Config.BarX, Config.BarY, Config.BarWidth, Config.BarHeight, Background.R, Background.G, Background.B, Background.A);
             // Foreground
             Function.Call(Hash.DRAW_RECT, Config.BarX + Config.BarOffsetX, Config.BarY + Config.BarOffsetY, Width, Config.BarHeight + Config.BarOffsetHeight, Foreground.R, Foreground.G, Foreground.B, Foreground.A);
+
+            // Draw the mana number
+            Function.Call(Hash.SET_TEXT_FONT, (int)GTA.Font.ChaletLondon);
+            Function.Call(Hash.SET_TEXT_SCALE, 1f, 0.3f);
+            Function.Call(Hash.SET_TEXT_COLOUR, 255, 255, 255, 255);
+            Function.Call(Hash.SET_TEXT_DROP_SHADOW);
+            Function.Call(Hash._SET_TEXT_ENTRY, "CELL_EMAIL_BCON");
+            Function.Call(Hash._ADD_TEXT_COMPONENT_STRING, Mana.ToString(CultureInfo.InvariantCulture));
+            Function.Call(Hash._DRAW_TEXT, Config.CountX, Config.CountY);
         }
     }
 }
