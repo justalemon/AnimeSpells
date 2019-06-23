@@ -6,21 +6,22 @@ namespace AnimeSpells
     {
         [JsonProperty("mana_max")]
         public int ManaMax { get; set; }
-        [JsonProperty("mana_x")]
-        public float ManaX { get; set; }
-        [JsonProperty("mana_y")]
-        public float ManaY { get; set; }
-        [JsonProperty("mana_w")]
-        public float ManaWidth { get; set; }
-        [JsonProperty("mana_h")]
-        public float ManaHeight { get; set; }
-        [JsonProperty("mana_offset_x")]
-        public float ManaOffsetX { get; set; }
-        [JsonProperty("mana_offset_y")]
-        public float ManaOffsetY { get; set; }
-        [JsonProperty("mana_offset_w")]
-        public float ManaOffsetWidth { get; set; }
-        [JsonProperty("mana_offset_h")]
-        public float ManaOffsetHeight { get; set; }
+
+        [JsonProperty("bar_x")]
+        public float BarX { get; set; }
+        [JsonProperty("bar_y")]
+        public float BarY { get; set; }
+        [JsonProperty("bar_w")]
+        public float BarWidth { get; set; }
+        [JsonProperty("bar_h")]
+        public float BarHeight { get; set; }
+        [JsonProperty("bar_offset_x")]
+        public float BarOffsetX { get; set; }
+        [JsonProperty("bar_offset_y")]
+        public float BarOffsetY { get; set; }
+        [JsonProperty("bar_offset_w")]
+        public float BarOffsetWidth { get; set; }
+        [JsonProperty("bar_offset_h")]
+        public float BarOffsetHeight { get; set; }
     }
 }

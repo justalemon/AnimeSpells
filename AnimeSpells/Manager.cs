@@ -1,4 +1,4 @@
-﻿using Citron;
+using Citron;
 using GTA;
 using GTA.Native;
 using Newtonsoft.Json;
@@ -88,13 +88,13 @@ namespace AnimeSpells
             }
 
             // Calculate the values of the mana bar
-            float Width = Config.ManaMax == 0 ? Config.ManaWidth + Config.ManaOffsetWidth : (Config.ManaWidth + Config.ManaOffsetWidth) * (Mana / (float)Config.ManaMax);
+            float Width = Config.ManaMax == 0 ? Config.BarWidth + Config.BarOffsetWidth : (Config.BarWidth + Config.BarOffsetWidth) * (Mana / (float)Config.ManaMax);
 
             // Draw the mana bar
             // Background
-            Function.Call(Hash.DRAW_RECT, Config.ManaX, Config.ManaY, Config.ManaWidth, Config.ManaHeight, Background.R, Background.G, Background.B, Background.A);
+            Function.Call(Hash.DRAW_RECT, Config.BarX, Config.BarY, Config.BarWidth, Config.BarHeight, Background.R, Background.G, Background.B, Background.A);
             // Foreground
-            Function.Call(Hash.DRAW_RECT, Config.ManaX + Config.ManaOffsetX, Config.ManaY + Config.ManaOffsetY, Width, Config.ManaHeight + Config.ManaOffsetHeight, Foreground.R, Foreground.G, Foreground.B, Foreground.A);
+            Function.Call(Hash.DRAW_RECT, Config.BarX + Config.BarOffsetX, Config.BarY + Config.BarOffsetY, Width, Config.BarHeight + Config.BarOffsetHeight, Foreground.R, Foreground.G, Foreground.B, Foreground.A);
         }
     }
 }
