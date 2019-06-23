@@ -1,5 +1,6 @@
 {
     "mana_max": 1000,
+    "mana_regen": 50,
 
     "bar_x": 0.086,
     "bar_y": 0.79,

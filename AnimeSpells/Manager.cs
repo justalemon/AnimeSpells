@@ -64,6 +64,10 @@ namespace AnimeSpells
                 }
             }
         }
+        /// <summary>
+        /// The next time that we need to update the mana count.
+        /// </summary>
+        private int NextTime = 0;
 
         public Manager()
         {
@@ -85,6 +89,21 @@ namespace AnimeSpells
                     // Set the mana value to the parsed input
                     Mana = Output;
                 }
+            }
+
+            // If the mana is under zero
+            if (Mana < 0)
+            {
+                // Ragdoll the player during 1ms
+                Function.Call(Hash.SET_PED_TO_RAGDOLL, Game.Player.Character, 1, 1, 1, true, true, false);
+            }
+            // If the mana is not at the maximum
+            else if (Mana != Config.ManaMax && Game.GameTime >= NextTime)
+            {
+                // Increase the mana by one
+                Mana += 1;
+                // And set the next time
+                NextTime = Game.GameTime + Config.ManaRegen;
             }
 
             // Calculate the values of the mana bar

@@ -6,6 +6,8 @@ namespace AnimeSpells
     {
         [JsonProperty("mana_max")]
         public int ManaMax { get; set; }
+        [JsonProperty("mana_regen")]
+        public int ManaRegen { get; set; }
 
         [JsonProperty("bar_x")]
         public float BarX { get; set; }
