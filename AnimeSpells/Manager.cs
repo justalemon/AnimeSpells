@@ -109,7 +109,8 @@ namespace AnimeSpells
             }
 
             // Calculate the values of the mana bar
-            float Width = Config.ManaMax == 0 ? Config.BarWidth + Config.BarOffsetWidth : (Config.BarWidth + Config.BarOffsetWidth) * (Mana / (float)Config.ManaMax);
+            float BaseWidth = Config.BarWidth + Config.BarOffsetWidth;
+            float Width = Mana <= 0 ? 0 : BaseWidth * (Mana / (float)Config.ManaMax);
 
             // Draw the mana bar
             // Background
