@@ -1,4 +1,4 @@
-﻿using Citron;
+using Citron;
 using GTA;
 using GTA.Native;
 using System;
@@ -24,7 +24,7 @@ namespace AnimeSpells.ALO
                         return 0;
                     case 225514697: // Michael
                         return 1;
-                    case -1686040670:
+                    case -1686040670: // Trevor
                         return 2;
                     default:
                         return -1;
@@ -46,7 +46,7 @@ namespace AnimeSpells.ALO
                     // Call the native and return the value of the lung capacity stat
                     unsafe
                     {
-                        Function.Call<bool>(Hash.STAT_GET_INT, Game.GenerateHash("SP0_LUNG_CAPACITY"), &Output, 1);
+                        Function.Call<bool>(Hash.STAT_GET_INT, Game.GenerateHash($"SP{(int)PlayerId}_LUNG_CAPACITY"), &Output, 1);
                     }
                 }
                 // Finally return the value
