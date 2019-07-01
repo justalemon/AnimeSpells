@@ -83,11 +83,6 @@ namespace AnimeSpells.Konosuba
 
         public Concealment()
         {
-            // This actually works different from the anime:
-            // Instead of camouflaging with the environment, the player becomes invisible for everyone else.
-            // But all of the other attributes that are carried over from the anime:
-            // - The spell is disabled when in contact with other enemies or enemy habilities
-            // - You can be Heard, so certain actions like shooting or entering a vehicle will disable the incantation
             Tick += OnTick;
             Aborted += OnAborted;
         }
