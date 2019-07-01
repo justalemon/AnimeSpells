@@ -1,6 +1,8 @@
 ﻿using Citron.Extensions;
 using GTA;
+using GTA.Math;
 using System;
+using System.Drawing;
 
 namespace AnimeSpells.ALO
 {
@@ -28,13 +30,22 @@ namespace AnimeSpells.ALO
                 return;
             }
 
-            // If the ped is friendly, the player tried to shot him and is not dead
-            if (Game.IsControlJustPressed(0, Control.Attack) && Target.IsFriendly() && !Target.IsDead)
+            // If the ped is friendly, is not dead and the health is not at the maximum
+            if (Target.IsFriendly() && !Target.IsDead && Target.GetMaxHealth() != Target.GetHealth())
             {
-                // Heal the ped
-                Target.Health = Target.MaxHealth;
-                // Notify the player
-                UI.Notify("Ped Healed!");
+                // Create a marker on the top of it
+                World.DrawMarker(MarkerType.UpsideDownCone, Target.Position + new Vector3(0, 0, 1), Vector3.Zero, Vector3.Zero, new Vector3(0.25f, 0.25f, 0.25f), Color.Orange);
+
+                // If the player tried to shot him and the required mana is available
+                if (Game.IsControlJustPressed(0, Control.Attack) && Manager.Mana >= 150)
+                {
+                    // Heal the ped
+                    Target.SetHealth(Target.GetMaxHealth());
+                    // Notify the user
+                    UI.Notify("Your friend was healed!");
+                    // And reduce the mana
+                    Manager.Mana -= 150;
+                }
             }
         }
     }
