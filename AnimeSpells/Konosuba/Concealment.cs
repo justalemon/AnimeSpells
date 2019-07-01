@@ -7,19 +7,11 @@ namespace AnimeSpells.Konosuba
 {
     /// <summary>
     /// Concealment
-    /// "A superior version of the Lurk skill. This grants ... invisibility for a ... span of time."
+    /// "A superior version of the Lurk skill. This grants ... invisibility for a very short span of time."
     /// From https://konosuba.fandom.com/wiki/Satou_Kazuma#Abilities
     /// </summary>
     public class Concealment : Script
     {
-        /// <summary>
-        /// The peds to interate for the combat check.
-        /// </summary>
-        private static Ped[] Peds = new Ped[0];
-        /// <summary>
-        /// The game time where we should fetch a new copy of the list of peds.
-        /// </summary>
-        private int NextFetch = 0;
         /// <summary>
         /// Internal activation of the spell.
         /// </summary>
@@ -33,8 +25,6 @@ namespace AnimeSpells.Konosuba
             get => InternalEnabled;
             set
             {
-                // Set the internal value
-                InternalEnabled = value;
                 // If the spell has been enabled
                 if (value)
                 {
@@ -46,18 +36,9 @@ namespace AnimeSpells.Konosuba
                         return;
                     }
 
-                    // Iterate over all of the peds in the map
-                    foreach (Ped ped in Peds)
-                    {
-                        // If the ped is on combat against the player
-                        if (ped.IsInCombatAgainst(Game.Player.Character))
-                        {
-                            // Return and disable the spell
-                            InternalEnabled = false;
-                            return;
-                        }
-                    }
 
+                    // Set the internal value
+                    InternalEnabled = true;
                     // Set the alpha of the player to 50 (to make it near invisible)
                     Game.Player.Character.Alpha = 50;
                     // And make him ignored by all other peds
@@ -66,6 +47,8 @@ namespace AnimeSpells.Konosuba
                 }
                 else
                 {
+                    // Set the spell to disabled
+                    InternalEnabled = false;
                     // Reset the alpha to the normal value
                     Game.Player.Character.Alpha = 255;
                     // Make the player no longer ignored
@@ -94,15 +77,6 @@ namespace AnimeSpells.Konosuba
             {
                 // Alternate the enabled status
                 Enabled = !Enabled;
-            }
-
-            // If the current time is higher or equal than the next fetch
-            if (Game.GameTime >= NextFetch)
-            {
-                // Update the list with all of the peds
-                Peds = World.GetAllPeds();
-                // And set the next time to fetch
-                NextFetch = Game.GameTime + 1000;
             }
 
             // If the spell is enabled
