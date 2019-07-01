@@ -1,4 +1,4 @@
-﻿using Citron;
+using Citron;
 using GTA;
 using GTA.Native;
 using System;
@@ -40,6 +40,14 @@ namespace AnimeSpells.Konosuba
                         return;
                     }
 
+                    // If the player does not has enough mana
+                    if (Manager.Mana < 500)
+                    {
+                        // Disable the spell and return
+                        InternalEnabled = false;
+                        return;
+                    }
+
                     // If the player wanted level is set to anything other than zero
                     if (Game.Player.WantedLevel != 0)
                     {
@@ -51,6 +59,8 @@ namespace AnimeSpells.Konosuba
                         Function.Call(Hash.SET_FAKE_WANTED_LEVEL, PreviousWanted);
                     }
 
+                    // Reduce the mana by 500
+                    Manager.Mana -= 500;
                     // Set the internal value
                     InternalEnabled = true;
                     // Set the alpha of the player to 50 (to make it near invisible)
