@@ -1,4 +1,4 @@
-using Citron;
+﻿using Citron;
 using GTA;
 using GTA.Native;
 using System;
@@ -68,6 +68,8 @@ namespace AnimeSpells.Konosuba
                     // And make him ignored by all other peds
                     Function.Call(Hash.SET_POLICE_IGNORE_PLAYER, Game.Player, true);
                     Function.Call(Hash.SET_EVERYONE_IGNORE_PLAYER, Game.Player, true);
+                    // Set the maximum wanted level to zero
+                    Game.MaxWantedLevel = 0;
                 }
                 else
                 {
@@ -90,6 +92,9 @@ namespace AnimeSpells.Konosuba
                         // And set the previous wanted to zero
                         PreviousWanted = 0;
                     }
+
+                    // Restore the max wanted level to 5
+                    Game.MaxWantedLevel = 5;
 
                     // If the current player weapon prop exists
                     if (Game.Player.Character.Weapons.CurrentWeaponObject != null)
