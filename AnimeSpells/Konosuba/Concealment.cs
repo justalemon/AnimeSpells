@@ -122,13 +122,6 @@ namespace AnimeSpells.Konosuba
                     // Set the current alpha to 50
                     Game.Player.Character.Weapons.CurrentWeaponObject.Alpha = 50;
                 }
-
-                // If the player just tried to fire a weapon
-                if (Game.IsControlJustPressed(0, Control.Attack))
-                {
-                    // Disable the spell
-                    Enabled = false;
-                }
             }
         }
 
