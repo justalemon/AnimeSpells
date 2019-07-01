@@ -1,7 +1,5 @@
 ﻿using GTA;
 using GTA.Math;
-using System;
-using System.Drawing;
 
 namespace AnimeSpells
 {
@@ -50,27 +48,6 @@ namespace AnimeSpells
             {
                 // Just return the entity hit by the raycast
                 return World.GetCrosshairCoordinates().HitCoords;
-            }
-        }
-
-        /// <summary>
-        /// The color for the ped marker.
-        /// </summary>
-        public static Color MarkerColor { get; set; } = Color.Cyan;
-
-        public Raycasting()
-        {
-            // Over here we subscribe our events
-            Tick += OnTick;
-        }
-
-        private void OnTick(object sender, EventArgs e)
-        {
-            // If there is a ped being targeted and is not the player
-            if (TargetedPed != null && TargetedPed != Game.Player.Character)
-            {
-                // Create a marker on the top of it
-                World.DrawMarker(MarkerType.UpsideDownCone, TargetedPed.Position + new Vector3(0, 0, 1), Vector3.Zero, Vector3.Zero, new Vector3(0.25f, 0.25f, 0.25f), MarkerColor);
             }
         }
     }
