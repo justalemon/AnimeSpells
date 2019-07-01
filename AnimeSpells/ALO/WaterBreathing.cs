@@ -1,4 +1,4 @@
-using Citron;
+﻿using Citron;
 using GTA;
 using GTA.Native;
 using System;
@@ -68,14 +68,28 @@ namespace AnimeSpells.ALO
                 // If the spell has been enabled
                 if (value)
                 {
-                    // Set the max time underwater a number above to the current value
-                    Function.Call(Hash.SET_PED_MAX_TIME_UNDERWATER, Game.Player.Character, (float)int.MaxValue);
+                    // If the player has enough mana
+                    if (Manager.Mana >= 250)
+                    {
+                        // Reduce the mana by 250
+                        Manager.Mana -= 250;
+                        // Set the max time underwater to the maximum int value and notify the user
+                        Function.Call(Hash.SET_PED_MAX_TIME_UNDERWATER, Game.Player.Character, (float)int.MaxValue);
+                        Screen.ShowHelp("Water Breathing has been ~g~enabled~s~!");
+                    }
+                    // Otherwise
+                    else
+                    {
+                        // Notify the user that he does not has enough mana point
+                        Screen.ShowHelp("Not enough mana points to enabme Water Breathing!");
+                    }
                 }
                 // Otherwise
                 else
                 {
-                    // Set the max time underwater just like the stat
+                    // Set the max time underwater just like the stat and notify the user
                     Function.Call(Hash.SET_PED_MAX_TIME_UNDERWATER, Game.Player.Character, (float)LungCapacity);
+                    Screen.ShowHelp("Water Breathing has been ~r~disabled~s~!");
                 }
                 // Set the value of the spell
                 InternalEnabled = value;
@@ -102,8 +116,6 @@ namespace AnimeSpells.ALO
 
                 // Alternate the activation of the spell
                 Enabled = !Enabled;
-                // And notify the user
-                Screen.ShowHelp("Water Breathing has been " + (Enabled ? "~g~enabled~s~" : "~r~disabled~s~") + "!" );
             }
         }
     }
