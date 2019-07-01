@@ -113,8 +113,9 @@ namespace AnimeSpells.ALO
                     Enabled = false;
                 }
 
-                // "Heal" the player
+                // "Heal" the player and clear the blood decals
                 Game.Player.Character.SetHealth(MaxHealth);
+                Game.Player.Character.ClearBloodDamage();
 
                 // If the player is on a vehicle
                 if (Game.Player.Character.CurrentVehicle != null)
