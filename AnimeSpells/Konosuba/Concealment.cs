@@ -13,6 +13,10 @@ namespace AnimeSpells.Konosuba
     public class Concealment : Script
     {
         /// <summary>
+        /// The wanted level set previously to enabling the spell.
+        /// </summary>
+        private static int PreviousWanted = 0;
+        /// <summary>
         /// Internal activation of the spell.
         /// </summary>
         private static bool InternalEnabled = false;
@@ -36,6 +40,16 @@ namespace AnimeSpells.Konosuba
                         return;
                     }
 
+                    // If the player wanted level is set to anything other than zero
+                    if (Game.Player.WantedLevel != 0)
+                    {
+                        // Save the current wanted level
+                        PreviousWanted = Game.Player.WantedLevel;
+                        // Set the current wanted to zero
+                        Game.Player.WantedLevel = 0;
+                        // And set a fake wanted level value
+                        Function.Call(Hash.SET_FAKE_WANTED_LEVEL, PreviousWanted);
+                    }
 
                     // Set the internal value
                     InternalEnabled = true;
@@ -51,9 +65,22 @@ namespace AnimeSpells.Konosuba
                     InternalEnabled = false;
                     // Reset the alpha to the normal value
                     Game.Player.Character.Alpha = 255;
+
                     // Make the player no longer ignored
                     Function.Call(Hash.SET_POLICE_IGNORE_PLAYER, Game.Player, false);
                     Function.Call(Hash.SET_EVERYONE_IGNORE_PLAYER, Game.Player, false);
+
+                    // If the previous wanted level is set to something other than zero
+                    if (PreviousWanted != 0)
+                    {
+                        // Disable the wanted override
+                        Function.Call(Hash.SET_FAKE_WANTED_LEVEL, 0);
+                        // Restore the wanted level
+                        Game.Player.WantedLevel = PreviousWanted;
+                        // And set the previous wanted to zero
+                        PreviousWanted = 0;
+                    }
+
                     // If the current player weapon prop exists
                     if (Game.Player.Character.Weapons.CurrentWeaponObject != null)
                     {
