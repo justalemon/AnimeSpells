@@ -60,6 +60,7 @@
     <Compile Include="ALO\ButterflyShieldSingle.cs" />
     <Compile Include="ALO\HealingSingle.cs" />
     <Compile Include="Configuration.cs" />
+    <Compile Include="GabrielDropOut\FirstTrumpetOfTheApocalypse.cs" />
     <Compile Include="Konosuba\Concealment.cs" />
     <Compile Include="ALO\WaterBreathing.cs" />
     <Compile Include="Konosuba\Explosion.cs" />
@@ -78,5 +79,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
