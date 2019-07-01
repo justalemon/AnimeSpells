@@ -1,4 +1,4 @@
-﻿using Citron;
+using Citron;
 using Citron.Extensions;
 using GTA;
 using GTA.Math;
@@ -14,47 +14,50 @@ namespace AnimeSpells.ALO
     public class ButterflyShieldSingle : Script
     {
         /// <summary>
+        /// The maximum health allowed on an entity.
+        /// </summary>
+        private const int MaxHealth = 1000;
+        /// <summary>
+        /// The normal maximum health of a ped.
+        /// </summary>
+        private const int MaxPedHealth = 200;
+        /// <summary>
+        /// The normal maximum health of a vehicle.
+        /// </summary>
+        private const int MaxVehicleHealth = 1000;
+        /// <summary>
         /// Internal activation of the spell.
         /// </summary>
         private static bool InternalEnabled = false;
+        /// <summary>
+        /// The value of health during the last tick.
+        /// </summary>
+        private static int LastHealth = 0;
         /// <summary>
         /// The activation of the Shield for the player.
         /// </summary>
         public static bool Enabled
         {
-            // Set the value that we got
             get => InternalEnabled;
             set
             {
-                // If the user wants to enable the shield and the ending time is lower or equal than the current time
-                if (value && Time <= Game.GameTime)
-                {
-                    // Set the internal value to enabled
-                    InternalEnabled = value;
-                    // And set the time to the correct value
-                    Time = Game.GameTime + MaxTime;
-                }
-                else if (!value)
-                {
-                    // Disable invencibility for the player and the vehicle (if is there)
-                    if (Game.Player.Character.IsInvincible)
-                    {
-                        Game.Player.Character.IsInvincible = false;
-                    }
-                    if (Game.Player.Character.CurrentVehicle != null && Game.Player.Character.CurrentVehicle.IsInvincible)
-                    {
-                        Game.Player.Character.CurrentVehicle.IsInvincible = false;
-                    }
+                InternalEnabled = value;
 
-                    // Set the time to zero
-                    Time = 0;
-                    // And disable the shield
-                    InternalEnabled = false;
+                if (!value)
+                {
+                    // Set the max and current player health to 200
+                    Game.Player.Character.SetMaxHealth(MaxPedHealth);
+                    Game.Player.Character.SetHealth(MaxPedHealth);
+                    // If the player is on a vehicle
+                    if (Game.Player.Character.CurrentVehicle != null)
+                    {
+                        // Set the max and current health to 1000
+                        Game.Player.Character.CurrentVehicle.SetMaxHealth(MaxVehicleHealth);
+                        Game.Player.Character.CurrentVehicle.SetHealth(MaxVehicleHealth);
+                    }
                 }
             }
         }
-        private static int Time = 0;
-        private const int MaxTime = 5000;
 
         public ButterflyShieldSingle()
         {
@@ -71,40 +74,59 @@ namespace AnimeSpells.ALO
                 Enabled = !Enabled;
             }
 
-            // If the spell is enabled and we are under the duration of the spell
-            if (Enabled && Time >= Game.GameTime)
+            // If the spell is enabled
+            if (Enabled)
             {
                 // Draw a marker around the player or vehicle
                 World.DrawMarker(MarkerType.DebugSphere, PlayerData.Position, Vector3.Zero, Vector3.Zero, Tools.ShieldDiameter, Color.DeepSkyBlue.Clear(), false, false, 0, true, "", "", false);
-                // Make the player invincible if he is not
-                if (!Game.Player.Character.IsInvincible)
+
+                // If the max health is not set to our value, apply it
+                if (Game.Player.Character.GetMaxHealth() != MaxHealth)
                 {
-                    Game.Player.Character.IsInvincible = true;
+                    Game.Player.Character.SetMaxHealth(MaxHealth);
                 }
+
+                // Calculate the difference between the current and last health value
+                int Difference = LastHealth - Game.Player.Character.GetHealth();
+                // If the current mana is higher or equal than the difference
+                if (Manager.Mana >= Difference)
+                {
+                    // Subtract the mana
+                    Manager.Mana -= Difference;
+                }
+                // Otherwise
+                else
+                {
+                    // Set the mana to zero and disable the script
+                    Manager.Mana = 0;
+                    Enabled = false;
+                }
+
+                // "Heal" the player
+                Game.Player.Character.SetHealth(MaxHealth);
+
                 // If the player is on a vehicle
                 if (Game.Player.Character.CurrentVehicle != null)
                 {
-                    // If the vehiclle is not invincible
-                    if (!Game.Player.Character.CurrentVehicle.IsInvincible)
+                    // If the max health is not set to 10000, apply it
+                    if (Game.Player.Character.CurrentVehicle.GetMaxHealth() != MaxHealth)
                     {
-                        // Make it invincible
-                        Game.Player.Character.CurrentVehicle.IsInvincible = true;
+                        Game.Player.Character.CurrentVehicle.SetMaxHealth(MaxHealth);
                     }
-                    // Wash and reapair the vehicle
-                    Game.Player.Character.CurrentVehicle.Wash();
-                    Game.Player.Character.CurrentVehicle.Repair();
+
+                    // "Heal" the vehicle
+                    Game.Player.Character.CurrentVehicle.SetHealth(MaxHealth);
                 }
+
                 // If the player has left a vehicle and is invincible
-                if (Game.Player.Character.LastVehicle != null && !Game.Player.Character.LastVehicle.IsInvincible)
+                if (Game.Player.Character.LastVehicle != null && Game.Player.Character.CurrentVehicle.GetMaxHealth() == MaxHealth)
                 {
                     // Disable the invencibility of it
-                    Game.Player.Character.LastVehicle.IsInvincible = false;
+                    Game.Player.Character.LastVehicle.SetMaxHealth(MaxVehicleHealth);
                 }
-            }
-            // If the script is enabled and the time is not zero
-            else if (Enabled && Time != 0)
-            {
-                Enabled = false;
+
+                // Store the current player health
+                LastHealth = Game.Player.Character.GetHealth();
             }
         }
     }
