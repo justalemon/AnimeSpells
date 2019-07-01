@@ -43,9 +43,10 @@ namespace AnimeSpells.ALO
             {
                 if (value)
                 {
-                    // If the mana is higher than zero, enable the spell
+                    // If the mana is higher than zero, heal the player and enable the spell
                     if (Manager.Mana > 0)
                     {
+                        Game.Player.Character.SetHealth(MaxPedHealth);
                         InternalEnabled = true;
                     }
                 }
