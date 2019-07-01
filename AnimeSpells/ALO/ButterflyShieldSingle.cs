@@ -41,10 +41,18 @@ namespace AnimeSpells.ALO
             get => InternalEnabled;
             set
             {
-                InternalEnabled = value;
-
-                if (!value)
+                if (value)
                 {
+                    // If the mana is higher than zero, enable the spell
+                    if (Manager.Mana > 0)
+                    {
+                        InternalEnabled = true;
+                    }
+                }
+                else
+                {
+                    // Set the shield to disabled
+                    InternalEnabled = false;
                     // Set the max and current player health to 200
                     Game.Player.Character.SetMaxHealth(MaxPedHealth);
                     Game.Player.Character.SetHealth(MaxPedHealth);
