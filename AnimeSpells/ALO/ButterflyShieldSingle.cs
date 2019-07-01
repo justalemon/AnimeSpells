@@ -108,8 +108,7 @@ namespace AnimeSpells.ALO
                 // Otherwise
                 else
                 {
-                    // Set the mana to zero and disable the script
-                    Manager.Mana = 0;
+                    // Disable the script
                     Enabled = false;
                 }
 
