@@ -54,6 +54,8 @@ namespace AnimeSpells.ALO
                 {
                     // Set the shield to disabled
                     InternalEnabled = false;
+                    // Set the previous health value to zero
+                    LastHealth = 0;
                     // Set the max and current player health to 200
                     Game.Player.Character.SetMaxHealth(MaxPedHealth);
                     Game.Player.Character.SetHealth(MaxPedHealth);
