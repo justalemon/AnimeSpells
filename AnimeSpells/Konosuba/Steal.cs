@@ -33,8 +33,8 @@ namespace AnimeSpells.Konosuba
             // If the player pressed the 1 key
             if (Game.IsControlJustPressed(0, Control.VehicleDuck))
             {
-                // If the ped does not has weapons
-                if (Target.Weapons.BestWeapon.Hash == WeaponHash.Unarmed)
+                // If the ped does not has weapons or there is not enough mana
+                if (Target.Weapons.BestWeapon.Hash == WeaponHash.Unarmed || Manager.Mana < 100)
                 {
                     return;
                 }
@@ -53,6 +53,8 @@ namespace AnimeSpells.Konosuba
                     Game.Player.Character.Weapons[Target.Weapons.Current.Hash].Ammo += Target.Weapons.Current.Ammo;
                 }
 
+                // Reduce the mana by 100
+                Manager.Mana -= 100;
                 // Notify the user
                 UI.Notify($"You stole a ~g~{Target.Weapons.Current.Hash}~s~!");
                 // Remove the weapon from the ped, we are done
