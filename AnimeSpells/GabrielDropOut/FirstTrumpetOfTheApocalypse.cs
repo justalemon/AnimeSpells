@@ -1,4 +1,4 @@
-﻿using Citron;
+using Citron;
 using GTA;
 using GTA.Native;
 using System;
@@ -52,6 +52,13 @@ namespace AnimeSpells.GabrielDropOut
                             Function.Call(Hash.REMOVE_IPL, IPL);
                         }
                     }
+
+                    // Set the player position to the current one with a couple of thoused on the air
+                    Game.Player.Character.Position = new Vector3(0, 0, 2500);
+                    // Disable the invencibility
+                    Game.Player.Character.IsInvincible = false;
+                    // Set the health to 1 (peds start from 100)
+                    Game.Player.Character.Health = 101;
                 }
                 // Otherwise
                 else
