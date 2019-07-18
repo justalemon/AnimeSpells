@@ -1,5 +1,9 @@
+﻿using Citron;
 using GTA;
+using GTA.Native;
 using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace AnimeSpells.GabrielDropOut
 {
@@ -10,6 +14,15 @@ namespace AnimeSpells.GabrielDropOut
     /// </summary>
     public class FirstTrumpetOfTheApocalypse : Script
     {
+        /// <summary>
+        /// List of IPLs that we are going to unload.
+        /// </summary>
+        private string[] IPLs = File.ReadAllLines("scripts\\AnimeSpells.IPL.txt");
+        /// <summary>
+        /// The IPLs that are currently loaded.
+        /// </summary>
+        private List<string> Loaded = null;
+
         public FirstTrumpetOfTheApocalypse()
         {
             // Add our events
@@ -18,7 +31,25 @@ namespace AnimeSpells.GabrielDropOut
 
         public void OnTick(object sender, EventArgs e)
         {
+            // If the user has entered the correct cheat
+            if (Screen.HasCheatBeenEntered("trumpet"))
+            {
+                // Create a new list of loaded IPLs
+                Loaded = new List<string>();
 
+                // Iterate over the IPL files that we have
+                foreach (string IPL in IPLs)
+                {
+                    // If the IPL is loaded
+                    if (Function.Call<bool>(Hash.IS_IPL_ACTIVE, IPL))
+                    {
+                        // Add the IPL to our list
+                        Loaded.Add(IPL);
+                        // And unload it
+                        Function.Call(Hash.REMOVE_IPL, IPL);
+                    }
+                }
+            }
         }
     }
 }
