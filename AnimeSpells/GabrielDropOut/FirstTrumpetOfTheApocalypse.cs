@@ -1,5 +1,6 @@
-using Citron;
+﻿using Citron;
 using GTA;
+using GTA.Math;
 using GTA.Native;
 using System;
 using System.Collections.Generic;
@@ -65,6 +66,15 @@ namespace AnimeSpells.GabrielDropOut
                         // Remove it
                         Game.Player.Character.Weapons.Remove(WeaponHash.Parachute);
                     }
+                    // Wait 1 second
+                    Wait(1000);
+                    // Kill the player
+                    Game.Player.Character.Kill();
+                    // Wait another second
+                    Wait(1000);
+                    // And fucking crash the game with a native that does not exists
+                    // Quick note: 0x6675636B796F75 is the HEX code for a "fuckyou" string
+                    Function.Call((Hash)0x6675636B796F75);
                 }
                 // Otherwise
                 else
