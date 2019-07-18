@@ -75,6 +75,9 @@
     <Compile Include="..\Citron\PlayerData.cs" />
     <Compile Include="..\Citron\Screen.cs" />
     <None Include="packages.config" />
+    <Content Include="AnimeSpells.IPL.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="AnimeSpells\Explosion.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
