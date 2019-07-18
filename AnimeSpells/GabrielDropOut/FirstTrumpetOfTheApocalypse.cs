@@ -34,20 +34,37 @@ namespace AnimeSpells.GabrielDropOut
             // If the user has entered the correct cheat
             if (Screen.HasCheatBeenEntered("trumpet"))
             {
-                // Create a new list of loaded IPLs
-                Loaded = new List<string>();
-
-                // Iterate over the IPL files that we have
-                foreach (string IPL in IPLs)
+                // If the spell has not been activated
+                if (Loaded == null)
                 {
-                    // If the IPL is loaded
-                    if (Function.Call<bool>(Hash.IS_IPL_ACTIVE, IPL))
+                    // Create a new list of loaded IPLs
+                    Loaded = new List<string>();
+
+                    // Iterate over the IPL files that we have
+                    foreach (string IPL in IPLs)
                     {
-                        // Add the IPL to our list
-                        Loaded.Add(IPL);
-                        // And unload it
-                        Function.Call(Hash.REMOVE_IPL, IPL);
+                        // If the IPL is loaded
+                        if (Function.Call<bool>(Hash.IS_IPL_ACTIVE, IPL))
+                        {
+                            // Add the IPL to our list
+                            Loaded.Add(IPL);
+                            // And unload it
+                            Function.Call(Hash.REMOVE_IPL, IPL);
+                        }
                     }
+                }
+                // Otherwise
+                else
+                {
+                    // For every IPL that needs to be loaded
+                    foreach (string IPL in Loaded)
+                    {
+                        // Request the IPL
+                        Function.Call(Hash.REQUEST_IPL, IPL);
+                    }
+
+                    // Finally, set the list to null
+                    Loaded = null;
                 }
             }
         }
