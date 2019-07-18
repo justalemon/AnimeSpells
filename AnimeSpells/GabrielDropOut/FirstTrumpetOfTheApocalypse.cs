@@ -1,4 +1,5 @@
-﻿using GTA;
+using GTA;
+using System;
 
 namespace AnimeSpells.GabrielDropOut
 {
@@ -9,5 +10,15 @@ namespace AnimeSpells.GabrielDropOut
     /// </summary>
     public class FirstTrumpetOfTheApocalypse : Script
     {
+        public FirstTrumpetOfTheApocalypse()
+        {
+            // Add our events
+            Tick += OnTick;
+        }
+
+        public void OnTick(object sender, EventArgs e)
+        {
+
+        }
     }
 }
