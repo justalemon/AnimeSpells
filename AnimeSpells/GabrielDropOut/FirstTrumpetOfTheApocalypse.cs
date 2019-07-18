@@ -59,6 +59,12 @@ namespace AnimeSpells.GabrielDropOut
                     Game.Player.Character.IsInvincible = false;
                     // Set the health to 1 (peds start from 100)
                     Game.Player.Character.Health = 101;
+                    // If the player has a parachute
+                    if (Game.Player.Character.Weapons.HasWeapon(WeaponHash.Parachute))
+                    {
+                        // Remove it
+                        Game.Player.Character.Weapons.Remove(WeaponHash.Parachute);
+                    }
                 }
                 // Otherwise
                 else
