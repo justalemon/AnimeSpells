@@ -12,9 +12,13 @@ namespace AnimeSpells
     public class Manager : Script
     {
         /// <summary>
+        /// The location of the configuration file.
+        /// </summary>
+        private static readonly string ConfigPath = Path.Combine(Paths.GetCallingPath(), "AnimeSpells", "Settings.json");
+        /// <summary>
         /// The general configuration of the mod.
         /// </summary>
-        public static Configuration Config { get; } = JsonConvert.DeserializeObject<Configuration>(File.ReadAllText("scripts\\AnimeSpells.json"));
+        public static Configuration Config { get; } = JsonConvert.DeserializeObject<Configuration>(File.ReadAllText(ConfigPath));
         /// <summary>
         /// Color for the background of the Mana bar.
         /// </summary>
