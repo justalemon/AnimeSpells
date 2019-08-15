@@ -5,6 +5,7 @@ using GTA.Native;
 using NAudio.Wave;
 using System;
 using System.Drawing;
+using System.IO;
 
 namespace AnimeSpells.Konosuba
 {
@@ -33,7 +34,7 @@ namespace AnimeSpells.Konosuba
         /// </summary>
         private float Volume => Function.Call<int>(Hash.GET_PROFILE_SETTING, 300) / 20f;
         private WaveOutEvent Output = new WaveOutEvent();
-        private AudioFileReader File = new AudioFileReader("scripts\\AnimeSpells\\Explosion.mp3");
+        private AudioFileReader File = new AudioFileReader(Path.Combine(Paths.GetCallingPath(), "AnimeSpells", "Explosion.mp3"));
         /// <summary>
         /// The current status of the explosion.
         /// </summary>

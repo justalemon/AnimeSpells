@@ -18,7 +18,7 @@ namespace AnimeSpells.GabrielDropOut
         /// <summary>
         /// List of IPLs that we are going to unload.
         /// </summary>
-        private string[] IPLs = File.ReadAllLines("scripts\\AnimeSpells.IPL.txt");
+        private readonly string[] IPLs = File.ReadAllLines(Path.Combine(Paths.GetCallingPath(), "AnimeSpells", "IPL.txt"));
         /// <summary>
         /// The IPLs that are currently loaded.
         /// </summary>
