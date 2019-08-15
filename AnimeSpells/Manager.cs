@@ -18,7 +18,7 @@ namespace AnimeSpells
         /// <summary>
         /// The general configuration of the mod.
         /// </summary>
-        public static Configuration Config { get; } = JsonConvert.DeserializeObject<Configuration>(File.ReadAllText(ConfigPath));
+        public static readonly Configuration Config = JsonConvert.DeserializeObject<Configuration>(File.ReadAllText(ConfigPath));
         /// <summary>
         /// Color for the background of the Mana bar.
         /// </summary>
